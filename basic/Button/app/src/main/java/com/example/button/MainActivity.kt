@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -20,6 +21,8 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -47,6 +50,9 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun Greeting(name: String, modifier: Modifier = Modifier) {
+
+    val buttonClicked = remember { mutableStateOf(false)}
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -54,14 +60,16 @@ fun Greeting(name: String, modifier: Modifier = Modifier) {
         horizontalAlignment  = Alignment.CenterHorizontally,
     ) {
         Text(
-            text = "Hello $name!"
+            text = if(buttonClicked.value) "버튼 클릭됨" else "Hello $name!"
         )
         Button(
-            onClick = { /*TODO*/ },
+            onClick = { buttonClicked.value = !buttonClicked.value },
             modifier = Modifier
-                .padding(top = 100.dp),
-
-
+                .padding(top = 100.dp)
+                .size(width = 150.dp, height = 40.dp),
+            colors = ButtonDefaults.buttonColors(
+                containerColor = Color(0xFF56E1F3),
+                contentColor = Color.Black)
 
         ) {
             Text(text = "Button")
