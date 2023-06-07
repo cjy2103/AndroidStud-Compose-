@@ -1,12 +1,6 @@
 ========== 기초 ==========
 안드로이드(Android) 컴포즈 기초 - TextView ( v )
 
-
-
-========== 기타 정보 ==========
-안드로이드(Android) Compose - 실기기/전체 화면 프리뷰 ( v )
-
-안드로이드(Android) Compose - TextView dp로 설정하기 ( v )
-
+안드로이드(Android) 컴포즈(Compose) 기초 - Button / 버튼 클릭 ( v )
 
 
