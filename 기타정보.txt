@@ -8,4 +8,4 @@
 
 안드로이드(Android) 컴포즈(Compose) - 컴포넌트간 간격 조절하기 / Spacer ( v )
 
-안드로이드(Android) 컴포즈(Compose) - Box, Column란? / 차이
+안드로이드(Android) 컴포즈(Compose) - Box, Column란? / 차이 ( v )
