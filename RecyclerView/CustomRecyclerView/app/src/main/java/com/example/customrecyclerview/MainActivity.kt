@@ -100,11 +100,7 @@ fun CharacterItem(character: Character){
 
         Row(
             modifier = Modifier.fillMaxWidth()
-                .border(
-                    brush = Brush.horizontalGradient(listOf(Color.Green, Color.Blue)),
-                    width = 1.dp,
-                    shape = RectangleShape
-                )
+                .border(1.dp, Color(0xFFBABABA))
         ){
             Image(painter = painterResource(id = character.image),
                 contentDescription = stringResource(id = character.title),
@@ -130,30 +126,7 @@ fun CharacterItem(character: Character){
 
 
 }
-//    Row(
-//        modifier = Modifier.fillMaxWidth()
-//    ){
-//        Image(painter = painterResource(id = character.image),
-//            contentDescription = stringResource(id = character.title),
-//            modifier = Modifier
-//                .width(100.dp)
-//                .height(100.dp)
-//        )
-//
-//        Column(modifier = Modifier
-//            .fillMaxWidth()
-//            .padding(top = 20.dp, start = 20.dp, end = 20.dp)){
-//            Text(
-//                text = stringResource(id = character.title),
-//                fontSize = 24.sp
-//            )
-//            Text(
-//                text = stringResource(id = character.describe),
-//                fontSize = 18.sp
-//            )
-//        }
-//
-//    }
+
 
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
