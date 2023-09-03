@@ -21,4 +21,5 @@
     <string name="tamtam">탬탬버린</string>
     <string name="tamtam_describe">트위치 스트리머</string>
     <string name="tamtam_link">https://www.youtube.com/channel/UCCA8UWUW80iHqK9ymdjRwPg</string>
+    <string name="title_activity_detail">DetailActivity</string>
 </resources>
