@@ -10,3 +10,5 @@
 안드로이드(Android) 컴포즈(Compose) 기초 - 리사이클러뷰(RecyclerView) / LazyColumn ( v )
 
 안드로이드(Android) 컴포즈(Compose) List - LazyColumn 예제 ( v )
+
+안드로이드(Android) 컴포즈(Compose) 기초 -  화면전환 / 이동 (Screen Change/ Screen Move) ( v )
