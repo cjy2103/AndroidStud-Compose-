@@ -29,9 +29,13 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.recyclerviewdetail.data.Character
 import com.example.recyclerviewdetail.data.CharacterProvider
+import com.example.recyclerviewdetail.ui.DetailScreen
+import com.example.recyclerviewdetail.ui.ListScreen
 import com.example.recyclerviewdetail.ui.theme.RecyclerViewDetailTheme
 
 class MainActivity : ComponentActivity() {
@@ -60,8 +64,17 @@ fun Greeting(name: String, modifier: Modifier = Modifier) {
         modifier = Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-
-
+        NavHost(
+            navController = navController,
+            startDestination = "ListScreen"
+        ){
+            composable("ListScreen"){
+                ListScreen("RecyclerViewDetail")
+            }
+            composable("DetailScreen"){
+                DetailScreen()
+            }
+        }
     }
 
 

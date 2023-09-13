@@ -2,6 +2,7 @@ package com.example.recyclerviewdetail.ui
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -22,9 +23,11 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.recyclerviewdetail.data.Character
 import com.example.recyclerviewdetail.data.CharacterProvider
+
 
 @Composable
 fun ListScreen(name: String, modifier: Modifier = Modifier) {
@@ -54,14 +57,14 @@ fun ListScreen(name: String, modifier: Modifier = Modifier) {
     Column(
         modifier = Modifier.padding(top = 60.dp)
     ) {
-        CharacterList()
+        CharacterList(navController)
     }
 
 
 }
 
 @Composable
-fun CharacterList(){
+fun CharacterList(navController: NavHostController) {
     val characterState = CharacterProvider().getCharacterList()
 
     LazyColumn(
@@ -71,7 +74,10 @@ fun CharacterList(){
     )
     {
         items(characterState.value) { character ->
-            CharacterItem(character)
+            CharacterItem(character){ clickedCharacter ->
+                navController.navigate("DetailScreen/$clickedCharacter")
+
+            }
         }
     }
 
@@ -79,11 +85,12 @@ fun CharacterList(){
 }
 
 @Composable
-fun CharacterItem(character: Character){
+fun CharacterItem(character: Character, onItemClick: (Character) -> Unit){
     Row(
         modifier = Modifier
             .fillMaxWidth()
             .border(1.dp, Color(0xFFBABABA))
+            .clickable { onItemClick(character) }
     ){
         Image(painter = painterResource(id = character.image),
             contentDescription = stringResource(id = character.title),
