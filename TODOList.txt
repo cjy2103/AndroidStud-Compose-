@@ -11,6 +11,7 @@
 
 안드로이드(Android) 컴포즈(Compose) 기초 -  화면전환 / 이동 (Screen Change/ Screen Move) ( v )
 
+안드로이드(Android) Compose - 부팅 시 앱 자동 실행 ( v )
 
 ============ List 예제 =============
 
