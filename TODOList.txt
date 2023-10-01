@@ -17,7 +17,6 @@
 
 안드로이드(Android) 컴포즈(Compose) List - LazyColumn 예제 ( v )
 
-안드로이드(Android) 컴포즈(Compose) List - LazyColumn Detail 예제 ( v )
-
+안드로이드(Android) 컴포즈(Compose) List - LazyColumn Detail 예제 ( )
 
 
