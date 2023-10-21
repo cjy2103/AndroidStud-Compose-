@@ -3,22 +3,20 @@ package com.example.retrofitwebserver.ui.vm
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.domain.repository.MainRepository
+import com.example.data.repository.MainRepository
+import com.example.domain.repository.DataGetUseCase
 import kotlinx.coroutines.launch
 
 class MainViewModel : ViewModel(){
-    private val mainRepository = MainRepository()
+    private val dataGetUseCase = DataGetUseCase(MainRepository())
 
     val data = mutableStateOf("데이터 들어오는 부분")
 
-    fun dataLoad(){
+
+    fun fetchData() {
         viewModelScope.launch {
-            try {
-                val result = mainRepository.callData()
-                data.value = result.toString()
-            } catch (e : Exception){
-                data.value = "오류발생 $e"
-            }
+            val result = dataGetUseCase.fetchData()
+            data.value = result
         }
     }
 }

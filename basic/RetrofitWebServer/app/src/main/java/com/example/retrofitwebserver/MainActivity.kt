@@ -56,7 +56,7 @@ fun Greeting(viewModel : MainViewModel, modifier: Modifier = Modifier) {
             text = viewModel.data.value
         )
 
-        Button(onClick = { viewModel.dataLoad() } ,
+        Button(onClick = { viewModel.fetchData() } ,
             modifier = modifier
                 .padding(top = 30.dp)
                 .size(width = 150.dp, height = 40.dp),

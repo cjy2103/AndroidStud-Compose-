@@ -1,4 +1,4 @@
-package com.example.domain.repository
+package com.example.data.repository
 
 import com.example.data.data.Data
 import com.example.data.network.RetrofitClient
