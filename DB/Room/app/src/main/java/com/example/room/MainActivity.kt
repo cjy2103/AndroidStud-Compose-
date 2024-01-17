@@ -2,14 +2,12 @@ package com.example.room
 
 import android.app.Application
 import android.os.Bundle
-import android.widget.Space
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -23,7 +21,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.ViewModelProvider
 import com.example.room.ui.theme.RoomTheme
@@ -66,7 +63,7 @@ fun Greeting(viewModel: MainViewModel, modifier: Modifier = Modifier) {
 
         Row(){
             Button(
-                onClick = { viewModel.saveData("저장 클릭") },
+                onClick = { viewModel.saveData() },
                 modifier = Modifier
                     .padding(top = 40.dp)
                     .size(width = 150.dp, height = 40.dp),
@@ -81,7 +78,7 @@ fun Greeting(viewModel: MainViewModel, modifier: Modifier = Modifier) {
             Spacer(modifier = Modifier.width(20.dp)) // 버튼 사이의 간격 20dp
 
             Button(
-                onClick = { viewModel.deleteData("조회 클릭") },
+                onClick = { viewModel.selectData() },
                 modifier = Modifier
                     .padding(top = 40.dp)
                     .size(width = 150.dp, height = 40.dp),
