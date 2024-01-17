@@ -65,7 +65,7 @@ fun Greeting(viewModel: MainViewModel, modifier: Modifier = Modifier) {
 
         Row(){
             Button(
-                onClick = { /*TODO*/ },
+                onClick = { viewModel.saveData("저장 클릭") },
                 modifier = Modifier
                     .padding(top = 40.dp)
                     .size(width = 150.dp, height = 40.dp),
@@ -80,7 +80,7 @@ fun Greeting(viewModel: MainViewModel, modifier: Modifier = Modifier) {
             Spacer(modifier = Modifier.width(20.dp)) // 버튼 사이의 간격 20dp
 
             Button(
-                onClick = { /*TODO*/ },
+                onClick = { viewModel.deleteData("조회 클릭") },
                 modifier = Modifier
                     .padding(top = 40.dp)
                     .size(width = 150.dp, height = 40.dp),
