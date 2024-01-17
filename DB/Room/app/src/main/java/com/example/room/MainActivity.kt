@@ -1,5 +1,6 @@
 package com.example.room
 
+import android.app.Application
 import android.os.Bundle
 import android.widget.Space
 import androidx.activity.ComponentActivity
@@ -99,6 +100,6 @@ fun Greeting(viewModel: MainViewModel, modifier: Modifier = Modifier) {
 @Composable
 fun GreetingPreview() {
     RoomTheme {
-        Greeting(MainViewModel()) // viewModel 전달
+        Greeting(MainViewModel(Application())) // viewModel 전달
     }
 }
