@@ -14,8 +14,6 @@ class CharacterProvider {
     @SuppressLint("MutableCollectionMutableState")
     private val characterList: State<ArrayList<Character>> = mutableStateOf(list)
 
-
-
     init {
         addItem(R.string.baknana, R.string.bak_describe, R.drawable.baknana, R.string.baknana_link)
         addItem(R.string.djmax, R.string.djmax_describe, R.drawable.djmax_clear_fail, R.string.djmax_archive)
