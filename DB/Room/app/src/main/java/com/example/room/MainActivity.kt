@@ -34,7 +34,6 @@ class MainActivity : ComponentActivity() {
         viewModel = ViewModelProvider(this)[MainViewModel::class.java]
         setContent {
             RoomTheme {
-                // A surface container using the 'background' color from the theme
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
@@ -111,6 +110,6 @@ fun Greeting(viewModel: MainViewModel, modifier: Modifier = Modifier) {
 @Composable
 fun GreetingPreview() {
     RoomTheme {
-        Greeting(MainViewModel(Application())) // viewModel 전달
+        Greeting(MainViewModel(Application()))
     }
 }
