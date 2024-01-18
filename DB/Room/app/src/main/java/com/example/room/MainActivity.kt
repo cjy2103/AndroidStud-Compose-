@@ -90,6 +90,20 @@ fun Greeting(viewModel: MainViewModel, modifier: Modifier = Modifier) {
                 Text(text = "조회")
             }
         }
+
+        Button(
+            onClick = { viewModel.deleteData() },
+            modifier = Modifier
+                .padding(top = 30.dp)
+                .size(width = 150.dp, height = 40.dp),
+            colors = ButtonDefaults.buttonColors(
+                containerColor = Color(0xFF56E1F3),
+                contentColor = Color.Black)
+
+        ) {
+            Text(text = "삭제")
+        }
+
     }
 }
 

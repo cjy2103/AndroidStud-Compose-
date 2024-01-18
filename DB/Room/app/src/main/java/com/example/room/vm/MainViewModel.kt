@@ -37,4 +37,11 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         }
     }
 
+    fun deleteData(){
+        viewModelScope.launch {
+            repository.deleteData("데이터 저장")
+            text.value = "저장된 값 없음"
+        }
+    }
+
 }

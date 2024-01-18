@@ -11,4 +11,9 @@ class DataRepository(private val database : DataBase) {
         val data = Data(word)
         database.dataDao().insertData(data)
     }
+
+    suspend fun deleteData(word: String) {
+        val data = Data(word)
+        database.dataDao().deleteData(data)
+    }
 }
