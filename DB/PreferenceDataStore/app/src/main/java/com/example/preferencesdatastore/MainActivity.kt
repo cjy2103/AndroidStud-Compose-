@@ -1,5 +1,6 @@
 package com.example.preferencesdatastore
 
+import android.app.Application
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -20,10 +21,17 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.ViewModelProvider
 import com.example.preferencesdatastore.ui.theme.PreferencesDataStoreTheme
+import com.example.preferencesdatastore.vm.MainViewModel
 
 class MainActivity : ComponentActivity() {
+
+    private val mainViewModel : MainViewModel by lazy {
+        ViewModelProvider(this)[MainViewModel::class.java]
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
+
         super.onCreate(savedInstanceState)
 
         setContent {
@@ -33,7 +41,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    Greeting()
+                    Greeting(mainViewModel)
                 }
             }
         }
@@ -41,7 +49,7 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun Greeting(modifier: Modifier = Modifier) {
+fun Greeting(viewModel : MainViewModel, modifier: Modifier = Modifier) {
 
     Column(
         modifier = Modifier
@@ -57,12 +65,12 @@ fun Greeting(modifier: Modifier = Modifier) {
         Spacer(modifier = Modifier.height(50.dp))
 
         Text(
-            text = "ㅁㅁㅁㅁㅁㅁㅁㅁ",
+            text = viewModel.text.value,
             modifier = modifier
         )
 
         Button(
-            onClick = {  },
+            onClick = { viewModel.dataSave() },
             modifier = Modifier
                 .padding(top = 40.dp)
                 .size(width = 150.dp, height = 40.dp),
@@ -75,7 +83,7 @@ fun Greeting(modifier: Modifier = Modifier) {
         }
 
         Button(
-            onClick = {  },
+            onClick = { viewModel.dataLoad() },
             modifier = Modifier
                 .padding(top = 40.dp)
                 .size(width = 150.dp, height = 40.dp),
@@ -87,14 +95,14 @@ fun Greeting(modifier: Modifier = Modifier) {
             Text(text = "조회")
         }
 
-
     }
 }
 
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 fun GreetingPreview() {
+
     PreferencesDataStoreTheme {
-        Greeting()
+        Greeting(MainViewModel(Application()))
     }
 }

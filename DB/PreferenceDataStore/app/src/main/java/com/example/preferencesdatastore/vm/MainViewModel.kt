@@ -7,27 +7,33 @@ import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.preferencesDataStore
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
-import dagger.hilt.android.lifecycle.HiltViewModel
-import dagger.hilt.android.qualifiers.ApplicationContext
+import com.example.preferencesdatastore.key.PreferencesKeys
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
 
 private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "my_data_store")
-@HiltViewModel
-class MainViewModel @Inject constructor(
-    private val application : Application
-) : ViewModel()  {
 
-    private val context : Context get() = application.applicationContext
+class MainViewModel (
+    application: Application
+) : AndroidViewModel(application)  {
+
+    private val context : Context get() = getApplication()
     val text = mutableStateOf("이곳에 값이 표시됩니다.")
 
     fun dataSave(){
         viewModelScope.launch {
             context.dataStore.edit {
-                
+                it[PreferencesKeys.MY_TEXT] = "데이터 값 저장"
+            }
+        }
+    }
+
+    fun dataLoad(){
+        viewModelScope.launch {
+            context.dataStore.data.collect {
+                text.value = it[PreferencesKeys.MY_TEXT] ?: "저장된 데이터가 없습니다."
             }
         }
     }
