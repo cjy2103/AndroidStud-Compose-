@@ -1,0 +1,26 @@
+<resources>
+    <string name="app_name">StaggerdGrid</string>
+
+
+    <string name="baknana">박나나</string>
+    <string name="bak_describe">치지직 스트리머</string>
+    <string name="baknana_link">https://www.youtube.com/channel/UCS3_H_feQRm4QbXipKTvSrw</string>
+
+    <string name="djmax">클리어,페일</string>
+    <string name="djmax_describe">디맥 캐릭터</string>
+    <string name="djmax_archive">https://www.youtube.com/c/DJMAXARCHIVE</string>
+
+    <string name="djmax_falling_love">FallingInLove</string>
+    <string name="djmax_falling_love_describe">Djmax 곡</string>
+    <string name="djmax_falling_love_link">https://www.youtube.com/watch?v=I3M_CNtzATY</string>
+
+    <string name="mwamwa">뫄뫄</string>
+    <string name="mwamwa_describe">치지직 스트리머</string>
+    <string name="mwamwa_link">https://www.youtube.com/c/%EB%A7%88%EB%AB%84</string>
+
+    <string name="tamtam">탬탬버린</string>
+    <string name="tamtam_describe">치지직 스트리머</string>
+    <string name="tamtam_link">https://www.youtube.com/channel/UCCA8UWUW80iHqK9ymdjRwPg</string>
+
+
+</resources>
