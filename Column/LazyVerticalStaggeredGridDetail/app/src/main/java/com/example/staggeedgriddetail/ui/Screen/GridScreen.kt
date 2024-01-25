@@ -1,6 +1,7 @@
 package com.example.staggeedgriddetail.ui.Screen
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
@@ -47,19 +48,24 @@ fun GridScreen(navController: NavController, characterViewModel: CharacterViewMo
                 item.hashCode()
             }
         ) { _, item ->
-            ItemView(itemData = item)
+            ItemView(itemData = item) {
+                characterViewModel.setSelectedCharacter(it)
+                navController.navigate("DetailScreen")
+            }
         }
     }
 
 }
 
 @Composable
-fun ItemView(itemData: Character) {
+fun ItemView(itemData: Character, onItemClick: (Character) -> Unit) {
     Box(
         modifier = Modifier
             .fillMaxWidth()
             .height(itemData.height.dp)
-            .clip(RoundedCornerShape(10.dp)),
+            .clip(RoundedCornerShape(10.dp))
+            .clickable { onItemClick(itemData) }
+        ,
         contentAlignment = Alignment.Center
     ) {
         Image(painter = painterResource(id = itemData.image),
