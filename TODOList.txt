@@ -21,7 +21,7 @@
 
 안드로이드(Android) 컴포즈(Compose) List - LazyColumn Detail 예제 ( v )
 
-안드로이드(Android) 컴포즈(Compose) Staggered Grid ( ) 
+안드로이드(Android) 컴포즈(Compose) Staggered Grid ( v ) 
 
 ============== DB 예제 ===============
 안드로이드(Android) 컴포즈(Compose) DB - Room 기초 예제 ( v ) 
