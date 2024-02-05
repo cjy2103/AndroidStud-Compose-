@@ -48,7 +48,7 @@ fun Greeting() {
     val offsetX = remember { mutableFloatStateOf(0f) }
     val offsetY = remember { mutableFloatStateOf(0f) }
     val maxZoom = 2f
-    val gestureScaleFactor = 0.5f
+    val minZoom = 0.5f
 
     Box(
         modifier = Modifier
@@ -59,6 +59,8 @@ fun Greeting() {
                     scale.floatValue *= zoom
                     if (scale.floatValue > maxZoom) {
                         scale.floatValue = maxZoom
+                    } else if(scale.floatValue < minZoom){
+                        scale.floatValue = minZoom
                     }
                     offsetX.floatValue += pan.x
                     offsetY.floatValue += pan.y
