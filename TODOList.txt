@@ -19,6 +19,7 @@
 
 안드로이드(Android) 컴포즈(Compose) - AlertDialog ( v )
 
+안드로이드(Android) 컴포즈(Compose) - Dialog Compose ( )
 
 안드로이드(Android) 컴포즈(Compose) - BottomNavigation ( )
 
