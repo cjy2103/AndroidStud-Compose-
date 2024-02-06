@@ -61,7 +61,7 @@ fun Greeting() {
                         zoom = (zoom * gestureZoom).coerceIn(minScale, maxScale)
                         if (zoom > 1) {
                             val maxOffsetX = imageWidth + 50f
-                            val maxOffsetY = imageHeight
+                            val maxOffsetY = imageHeight + 50f
                             offsetX += pan.x * zoom
                             offsetY += pan.y * zoom
                             offsetX = offsetX.coerceIn(-maxOffsetX, maxOffsetX)
