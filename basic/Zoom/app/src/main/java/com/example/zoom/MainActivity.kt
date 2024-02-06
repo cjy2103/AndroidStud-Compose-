@@ -76,7 +76,7 @@ fun Greeting() {
     ){
         Image(
             painter = painterResource(id = tamtam),
-            contentDescription = "some description here",
+            contentDescription = "탬탬버린",
             contentScale = ContentScale.Fit,
             modifier = Modifier
                 .graphicsLayer(
