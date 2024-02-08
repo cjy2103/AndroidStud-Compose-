@@ -1,7 +1,9 @@
 package com.example.dialogcompose.ui.dialog
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -12,6 +14,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonColors
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -40,13 +44,11 @@ fun CustomDialog(
     onClickOk: () -> Unit,
     onClickNo: () -> Unit
 ){
-    Column(
-        modifier = Modifier
-            .size(320.dp,350.dp)
-    ){
-        Row(
+    Dialog(onDismissRequest = {
+    }){
+        Column(
             modifier = Modifier
-                .size(320.dp, 50.dp)
+                .size(320.dp, 350.dp)
                 .background(
                     brush = Brush.horizontalGradient(
                         colors = listOf(
@@ -54,60 +56,110 @@ fun CustomDialog(
                             Color.Cyan
                         )
                     )
-                ),
-        ) {
-            Spacer(modifier = Modifier.width(70.dp))
+                )
+                .border(
+                    width = 1.dp,
+                    color = Color.Black
+                )
+        ){
+            Row(
+                modifier = Modifier
+                    .size(320.dp, 50.dp)
+                    .background(
+                        brush = Brush.horizontalGradient(
+                            colors = listOf(
+                                Color(0xFF94E6E9),
+                                Color.Cyan
+                            )
+                        )
+                    )
+                ,
+            ) {
+                Spacer(modifier = Modifier.width(70.dp))
 
-            Image(
-                painterResource(id = R.drawable.blue_archive),
-                contentDescription = "블루아카이브")
+                Image(
+                    painterResource(id = R.drawable.blue_archive),
+                    contentDescription = "블루아카이브")
 
-            Spacer(modifier = Modifier.width(20.dp))
+                Spacer(modifier = Modifier.width(20.dp))
 
-            val mapleFont = FontFamily(
-                Font(R.font.font_maple)
-            )
+                val mapleFont = FontFamily(
+                    Font(R.font.font_maple)
+                )
 
-            val mapleLight = FontFamily(
-                Font(R.font.maplestory_light)
-            )
+                val mapleLight = FontFamily(
+                    Font(R.font.maplestory_light)
+                )
 
-            Text(
-                modifier = Modifier.align(Alignment.CenterVertically),
-                text = title,
-                fontSize = 24.sp,
-                fontFamily = mapleFont,
-            )
-        }
+                Text(
+                    modifier = Modifier.align(Alignment.CenterVertically),
+                    text = title,
+                    fontSize = 24.sp,
+                    fontFamily = mapleFont,
+                )
+            }
 
-        Column(
-            modifier = Modifier
-                .size(320.dp,250.dp)
+            Column(
+                modifier = Modifier
+                    .size(320.dp, 250.dp)
+                    .background(
+                        brush = Brush.horizontalGradient(
+                            colors = listOf(
+                                Color(0xFFAAF5E6),
+                                Color(0xFF58DFF0)
+                            )
+                        )
+                    )
+                    .border(
+                        width = 1.dp,
+                        color = Color.Black,
+                    )
+            ) {
+                Text(text = message)
+            }
 
-        ) {
-            Text(text = message)
-        }
-
-        Row (
-
-        ) {
-            Button(onClick = { onClickNo() },
-                modifier = Modifier.size(
-
-                ),
-                shape = RectangleShape
+            Row (
+                modifier = Modifier.padding(start = 30.dp,end = 30.dp)
 
             ) {
-                Text(text = negativeText)
+                Button(onClick = { onClickNo() },
+                    modifier = Modifier.size(
+                        width = 120.dp, height = 70.dp
+                    ),
+                    shape = RectangleShape,
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = Color(0xFF7BC1F8),
+                        contentColor = Color.Black)
+
+
+                ) {
+                    Text(
+                        text = negativeText,
+                        fontSize = 20.sp
+                    )
+                }
+
+                Spacer(modifier = Modifier.width(20.dp))
+
+                Button(onClick = { onClickOk() },
+                    modifier = Modifier.size(
+                        width = 120.dp, height = 70.dp
+                    ),
+                    shape = RectangleShape,
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = Color(0xFF7BC1F8),
+                        contentColor = Color.Black)
+
+                ) {
+                    Text(
+                        text = positiveText,
+                        fontSize = 20.sp
+                    )
+                }
             }
-            Button(onClick = { onClickOk() }) {
-                Text(text = positiveText)
-            }
+
         }
-
     }
-
-
 }
 
 @Preview(showBackground = true, showSystemUi = true)

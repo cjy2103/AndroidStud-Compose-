@@ -54,7 +54,6 @@ fun Greeting() {
         modifier = Modifier
             .padding(top = 50.dp)
             .fillMaxSize()
-//            .background(Color.Black)
         , horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(
@@ -73,19 +72,16 @@ fun Greeting() {
 
         if(buttonClicked.value){
             CustomDialog(
-                title = "10분 동안 잠글게요",
-                message = "잠긴 시간 동안 취소하기 어려워요",
-                positiveText = "잠그기",
-                negativeText = "돌아가기",
-                onClickOk = {},
-                onClickNo = {}
+                "블루아카이브",
+                "나쁜 선생에게는 파봉만준다.",
+                "확인",
+                "취소",
+                {buttonClicked.value = false},
+                {buttonClicked.value = false}
             )
 
+        }
     }
-
-    }
-
-
 }
 
 @Preview(showBackground = true, showSystemUi = true)
