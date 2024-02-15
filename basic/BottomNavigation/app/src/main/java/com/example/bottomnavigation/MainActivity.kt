@@ -96,9 +96,9 @@ fun MyBottomNavigation(navController: NavController) {
     )
 
     BottomNavigation(
-        backgroundColor = Color.Cyan,
+        backgroundColor = Color(0x99FFFFFF),
         contentColor = Color.Unspecified,
-        
+        elevation = 0.dp
     ) {
         val navBackStackEntry by navController.currentBackStackEntryAsState()
         val currentRoute = navBackStackEntry?.destination?.route
@@ -124,21 +124,11 @@ fun MyBottomNavigation(navController: NavController) {
                             .width(40.dp)
                             .height(40.dp)
                     )
-                }, )
+                },
+                unselectedContentColor = Color.Unspecified
+                )
         }
-}
-
-
-//    Scaffold(
-//        bottomBar = {
-//            BottomNavigation(
-//                backgroundColor = Color.Cyan,
-//                contentColor = Color(0xFF3F414E)
-//            )
-//        }
-//    ) {
-//
-//    }
+    }
 }
 
 @Preview(showBackground = true, showSystemUi = true)
