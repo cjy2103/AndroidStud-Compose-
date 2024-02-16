@@ -1,9 +1,6 @@
-package com.example.bottomnavigation
+package com.example.bottomnavigation.ui
 
-import android.app.Activity
 import android.os.Bundle
-import android.view.View
-import android.view.Window
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.background
@@ -21,23 +18,20 @@ import androidx.compose.material.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
-import androidx.compose.ui.platform.LocalWindowInfo
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.core.view.WindowCompat
 import androidx.navigation.NavController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import com.example.bottomnavigation.ui.navigation.BottomNavItem
 import com.example.bottomnavigation.ui.navigation.BottomNavItem.*
 import com.example.bottomnavigation.ui.navigation.NavigationHost
 import com.example.bottomnavigation.ui.theme.BottomNavigationTheme
@@ -63,32 +57,37 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun Greeting(modifier: Modifier = Modifier) {
-//    val activity = SystemUtil.findActivity(LocalContext.current)
-//    val window = activity.window
-//    val view = LocalView.current
+    val activity = SystemUtil.findActivity(LocalContext.current)
+    val window = activity.window
+    val view = LocalView.current
 
-//    SystemUtil.sofNavigationBarHide(window = window)
-//    SystemUtil.statusbarSetting(window = window, view = view)
-
-
+    SystemUtil.sofNavigationBarHide(window = window)
+    SystemUtil.statusbarSetting(window = window, view = view)
 
     val navController = rememberNavController()
     NavigationHost(navController)
 
+    Spacer(modifier = modifier.height(50.dp))
 
-    Spacer(modifier = Modifier.height(50.dp))
-
-
+    val gradient = Brush.horizontalGradient(
+        listOf(Color(0xFFF8D9D9), Color(0xFFF4BACE))
+    )
 
     Scaffold(
+        modifier = modifier
+            .fillMaxSize()
+        ,
         bottomBar = { MyBottomNavigation(navController = navController) }
     ) {
-        Box(Modifier.padding(it)){
+        Box(
+            modifier.background(gradient)
+                .padding(it)
+        ){
             NavigationHost(navController = navController)
         }
     }
 
-    }
+}
 
 @Composable
 fun MyBottomNavigation(navController: NavController) {

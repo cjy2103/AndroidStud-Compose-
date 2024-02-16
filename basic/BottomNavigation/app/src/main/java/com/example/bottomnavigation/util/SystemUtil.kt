@@ -19,16 +19,16 @@ object SystemUtil {
      * @param constraintLayout
      */
     fun statusbarSetting(window: Window, view : View) {
-//        window.addFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS)
-//
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-//            window.insetsController?.setSystemBarsAppearance(WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS,
-//                WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS) // 주석치면 아이콘색 흰색
-//        }
-//        else {
-//            view.systemUiVisibility =
-//                View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR // 아이콘색 검정으로 -> 주석하면 흰색
-//        }
+        window.addFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS)
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            window.insetsController?.setSystemBarsAppearance(WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS,
+                WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS) // 주석치면 아이콘색 흰색
+        }
+        else {
+            view.systemUiVisibility =
+                View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR // 아이콘색 검정으로 -> 주석하면 흰색
+        }
 
 
     }
