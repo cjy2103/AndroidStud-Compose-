@@ -107,9 +107,11 @@ fun MyBottomNavigation(navController: NavController) {
         val navBackStackEntry by navController.currentBackStackEntryAsState()
         val currentRoute = navBackStackEntry?.destination?.route
 
+
         items.forEach { item ->
+            val selected = currentRoute == item.route
             BottomNavigationItem(
-                selected = currentRoute == item.route,
+                selected = selected,
                 onClick = {
                     navController.navigate(item.route){
                         navController.graph.startDestinationRoute?.let {
@@ -122,12 +124,22 @@ fun MyBottomNavigation(navController: NavController) {
                     }
                 },
                 icon = {
-                    Icon(painter = painterResource(id = item.icon),
-                        contentDescription = item.label,
-                        modifier = Modifier
-                            .width(40.dp)
-                            .height(40.dp)
-                    )
+                    if(selected){
+                        Icon(painter = painterResource(id = item.selectedIcon),
+                            contentDescription = item.label,
+                            modifier = Modifier
+                                .width(40.dp)
+                                .height(40.dp)
+                        )
+                    } else {
+                        Icon(painter = painterResource(id = item.unselectedIcon),
+                            contentDescription = item.label,
+                            modifier = Modifier
+                                .width(40.dp)
+                                .height(40.dp)
+                        )
+                    }
+
                 },
                 unselectedContentColor = Color.Unspecified
                 )
