@@ -21,7 +21,7 @@
 
 안드로이드(Android) 컴포즈(Compose) - CustomDialog / Compose Dialog ( v )
 
-안드로이드(Android) 컴포즈(Compose) - BottomNavigation ( )
+안드로이드(Android) 컴포즈(Compose) - BottomNavigation 구현하기 / 예제 ( v )
 
 안드로이드(Android) 컴포즈(Compose) - Lottie(로티) 예제 / 애니메이션 이미지 ( v )
 
