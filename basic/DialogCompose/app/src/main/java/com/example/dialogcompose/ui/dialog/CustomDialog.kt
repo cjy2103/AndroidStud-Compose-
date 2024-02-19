@@ -18,6 +18,8 @@ import androidx.compose.material3.ButtonColors
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
@@ -31,8 +33,10 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
+import androidx.compose.ui.window.DialogProperties
 import com.example.dialogcompose.R
 import com.example.dialogcompose.ui.theme.DialogComposeTheme
+import java.util.Properties
 
 
 @Composable
@@ -44,8 +48,14 @@ fun CustomDialog(
     onClickOk: () -> Unit,
     onClickNo: () -> Unit
 ){
-    Dialog(onDismissRequest = {
-    }){
+
+    Dialog(onDismissRequest = { onClickNo()
+    },
+        properties = DialogProperties(
+            dismissOnBackPress = true,
+            dismissOnClickOutside = true
+        )
+        ){
         Column(
             modifier = Modifier
                 .size(320.dp, 350.dp)
