@@ -21,6 +21,8 @@
 
 안드로이드(Android) 컴포즈(Compose) - CustomDialog / Compose Dialog ( v )
 
+안드로이드(Android) 컴포즈(Compose) - Dialog 외부 영역 클릭 시 Dialog 종료 / Back버튼 클릭시 Dialog Dismiss ( v )
+
 안드로이드(Android) 컴포즈(Compose) - BottomNavigation 구현하기 / 예제 ( v )
 
 안드로이드(Android) 컴포즈(Compose) - BottomNavigation 아이템 선택 이미지 변경 / 아이템 클릭 시 아이콘 변경 ( v )
