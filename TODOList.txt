@@ -29,6 +29,8 @@
 
 안드로이드(Android) 컴포즈(Compose) - BottomNavigation 아이템 선택 이미지 변경 / 아이템 클릭 시 아이콘 변경 ( v )
 
+안드로이드(Android) 컴포즈(Compose) - Navigation (navigate) 애니메이션 삭제 ( v )
+
 안드로이드(Android) 컴포즈(Compose) - BottomNavigation 버튼 클릭 / 상태 저장 ( v )
 
 안드로이드(Android) 컴포즈(Compose) - Lottie(로티) 예제 / 애니메이션 이미지 ( v )
