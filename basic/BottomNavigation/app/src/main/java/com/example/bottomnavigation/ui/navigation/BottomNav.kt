@@ -1,5 +1,7 @@
 package com.example.bottomnavigation.ui.navigation
 
+import androidx.compose.animation.EnterTransition
+import androidx.compose.animation.ExitTransition
 import androidx.compose.runtime.Composable
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
@@ -16,7 +18,14 @@ fun NavigationHost(navController: NavHostController
 // 추가 parameter : ViewModel의 정보가 담긴 객체 변수
 ){
     // parameter로 ViewModel이 담김 객체를 가져옴
-    NavHost(navController, startDestination = BottomNavItem.Djmax.route){
+    NavHost(navController, startDestination = BottomNavItem.Djmax.route,
+            enterTransition = {
+                EnterTransition.None
+            },
+            exitTransition = {
+                ExitTransition.None
+            }
+        ){
         composable(BottomNavItem.Djmax.route){
             DjmaxScreen() //ViewModel.djMaxViewModel을 argument로 넘겨줌
         }
