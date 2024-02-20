@@ -27,11 +27,16 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.bottomnavigation.R
 import com.example.bottomnavigation.ui.theme.BottomNavigationTheme
+import com.example.bottomnavigation.ui.vm.DjmaxViewModel
 
 @Composable
 fun DjmaxScreen(modifier: Modifier = Modifier){
+
+    val viewModel : DjmaxViewModel = viewModel()
+
     Column(
         modifier = modifier
             .padding(top = 20.dp)
@@ -41,12 +46,20 @@ fun DjmaxScreen(modifier: Modifier = Modifier){
 
         Spacer(modifier = Modifier.height(100.dp))
 
-        val buttonClicked = remember { mutableStateOf(true) }
+        val buttonClicked = viewModel.buttonClicked
 
-        Image(painter = painterResource(id = R.drawable.iv_djmax_x_mas),
-            contentDescription = "Djmax",
-            modifier = Modifier.size(250.dp,250.dp)
-        )
+        if(buttonClicked.value){
+            Image(painter = painterResource(id = R.drawable.iv_djmax_alice),
+                contentDescription = "Djmax",
+                modifier = Modifier.size(250.dp,250.dp)
+            )
+        } else {
+            Image(painter = painterResource(id = R.drawable.iv_djmax_x_mas),
+                contentDescription = "Djmax",
+                modifier = Modifier.size(250.dp,250.dp)
+            )
+        }
+
 
 
         Spacer(modifier = Modifier.height(20.dp))
@@ -55,10 +68,8 @@ fun DjmaxScreen(modifier: Modifier = Modifier){
 
         Spacer(modifier = Modifier.height(50.dp))
 
-
-
         Button(
-            onClick = { /*TODO*/ },
+            onClick = { viewModel.clickButton() },
             modifier = Modifier
                 .size(150.dp,50.dp)
             ,

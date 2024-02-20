@@ -30,6 +30,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.bottomnavigation.ui.navigation.BottomNavItem.*
@@ -65,7 +66,7 @@ fun Greeting(modifier: Modifier = Modifier) {
     SystemUtil.statusbarSetting(window = window, view = view)
 
     val navController = rememberNavController()
-    NavigationHost(navController)
+//    NavigationHost(navController)
 
     Spacer(modifier = modifier.height(50.dp))
 
@@ -115,12 +116,14 @@ fun MyBottomNavigation(navController: NavController) {
                 onClick = {
                     navController.navigate(item.route){
                         navController.graph.startDestinationRoute?.let {
+                            launchSingleTop = true
+                            restoreState = true
+
                             popUpTo(it){
                                 saveState = true
                             }
                         }
-                        launchSingleTop = true
-                        restoreState = true
+
                     }
                 },
                 icon = {
