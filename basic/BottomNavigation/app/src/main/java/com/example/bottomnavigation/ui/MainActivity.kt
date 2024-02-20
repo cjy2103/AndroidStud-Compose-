@@ -66,7 +66,6 @@ fun Greeting(modifier: Modifier = Modifier) {
     SystemUtil.statusbarSetting(window = window, view = view)
 
     val navController = rememberNavController()
-//    NavigationHost(navController)
 
     Spacer(modifier = modifier.height(50.dp))
 
