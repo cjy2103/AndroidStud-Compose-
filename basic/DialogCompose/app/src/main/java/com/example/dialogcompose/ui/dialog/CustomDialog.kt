@@ -25,6 +25,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
+import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
@@ -34,6 +35,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
+import androidx.compose.ui.window.DialogWindowProvider
 import com.example.dialogcompose.R
 import com.example.dialogcompose.ui.theme.DialogComposeTheme
 import java.util.Properties
@@ -56,6 +58,8 @@ fun CustomDialog(
             dismissOnClickOutside = true
         )
         ){
+        //setDimAmout로 dim 조절 가능 0 ~ 1f 사이로 조절
+        (LocalView.current.parent as DialogWindowProvider).window.setDimAmount(0f)
         Column(
             modifier = Modifier
                 .size(320.dp, 350.dp)
