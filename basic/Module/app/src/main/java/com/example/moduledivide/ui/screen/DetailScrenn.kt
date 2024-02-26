@@ -23,8 +23,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.navigation.NavHostController
-import androidx.navigation.compose.rememberNavController
 import com.example.data.CharacterData
 import com.example.moduledivide.R
 import com.example.moduledivide.ui.theme.ModuleDivideTheme
@@ -32,7 +30,7 @@ import com.example.moduledivide.ui.vm.CharacterViewModel
 
 
 @Composable
-fun DetailScreen(navController: NavHostController, viewModel : CharacterViewModel) {
+fun DetailScreen(viewModel: CharacterViewModel) {
     Column(
         modifier = Modifier.padding(top = 50.dp),
         horizontalAlignment = Alignment.CenterHorizontally
@@ -109,7 +107,7 @@ private fun DetailPreview() {
                 image = R.drawable.baknana,
                 youtubeLink = R.string.baknana_link
             )
-            DetailScreen(rememberNavController(), CharacterViewModel(character))
+            DetailScreen(CharacterViewModel(character))
         }
     }
 }

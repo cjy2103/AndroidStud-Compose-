@@ -56,7 +56,7 @@ fun ListScreen(navController: NavHostController, characterViewModel : CharacterV
 
 @Composable
 fun CharacterList(
-    navController: NavHostController = rememberNavController(),
+    navController: NavHostController ,
     characterViewModel: CharacterViewModel
 ) {
     val characterState = CharacterProvider().getCharacterList()
