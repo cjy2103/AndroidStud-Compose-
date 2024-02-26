@@ -13,16 +13,26 @@ class CharacterProvider {
 
     init {
 
-        addItem(com.example.moduledivide.R.string.baknana, com.example.moduledivide.R.string.bak_describe, com.example.moduledivide.R.drawable.baknana, com.example.moduledivide.R.string.baknana_link)
-        addItem(R.string.djmax, R.string.djmax_describe, R.drawable.djmax_clear_fail, R.string.djmax_archive)
-        addItem(
-            R.string.djmax_falling_love,
-            R.string.djmax_falling_love_describe,
-            R.drawable.djmax_falling_in_love,
-            R.string.djmax_falling_love_link
-        )
-        addItem(R.string.mwamwa, R.string.mwamwa_describe, R.drawable.mwama,R.string.mwamwa_link)
-        addItem(R.string.tamtam, R.string.tamtam_describe, R.drawable.tamtam,R.string.tamtam_link)
+        addItem(com.example.moduledivide.R.string.baknana,
+            com.example.moduledivide.R.string.bak_describe,
+            com.example.moduledivide.R.drawable.baknana,
+            com.example.moduledivide.R.string.baknana_link)
+        addItem(com.example.moduledivide.R.string.djmax,
+            com.example.moduledivide.R.string.djmax_describe,
+            com.example.moduledivide.R.drawable.djmax_clear_fail,
+            com.example.moduledivide.R.string.djmax_archive)
+        addItem(com.example.moduledivide.R.string.djmax_falling_love,
+            com.example.moduledivide.R.string.djmax_falling_love_describe,
+            com.example.moduledivide.R.drawable.djmax_falling_in_love,
+            com.example.moduledivide.R.string.djmax_falling_love_link)
+        addItem(com.example.moduledivide.R.string.mwamwa,
+            com.example.moduledivide.R.string.mwamwa_describe,
+            com.example.moduledivide.R.drawable.mwama,
+            com.example.moduledivide.R.string.mwamwa_link)
+        addItem(com.example.moduledivide.R.string.tamtam,
+            com.example.moduledivide.R.string.tamtam_describe,
+            com.example.moduledivide.R.drawable.tamtam,
+            com.example.moduledivide.R.string.tamtam_link)
 
     }
 

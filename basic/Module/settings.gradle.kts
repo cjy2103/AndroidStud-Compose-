@@ -14,4 +14,4 @@ dependencyResolutionManagement {
 }
 
 rootProject.name = "ModuleDivide"
-include(":app")
+include(":app",":data")
