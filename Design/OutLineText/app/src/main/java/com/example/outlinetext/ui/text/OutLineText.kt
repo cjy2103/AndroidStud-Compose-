@@ -27,15 +27,12 @@ fun TextOutLine(text : String, innerColor : Color, outlineColor : Color,
                 )
             )
         ),
-        fontSize = 24.sp
     )
 
     Text(
         text = text,
         color = innerColor,
         style = MaterialTheme.typography.displayLarge
-        ,        fontSize = 24.sp
-
     )
 }
 
@@ -45,7 +42,7 @@ fun FontOutLine(text : String, innerColor : Color, outlineColor : Color,
     Text(
         text = text,
         style = TextStyle(
-            color = Color(0xFF000000),
+            color = outlineColor,
             drawStyle = Stroke(
                 width = strokeWidth
             )
@@ -56,13 +53,7 @@ fun FontOutLine(text : String, innerColor : Color, outlineColor : Color,
 
     Text(
         text = text,
-        color = Color(0xFF5BCAD8),
-        style = TextStyle(
-            color = Color(0xFF000000),
-            drawStyle = Stroke(
-                width = 0f
-            )
-        ),
+        color = innerColor,
         fontFamily = font,
         fontSize = size
     )

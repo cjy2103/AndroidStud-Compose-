@@ -12,20 +12,30 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.requiredHeight
+import androidx.compose.foundation.layout.requiredSize
+import androidx.compose.foundation.layout.requiredWidth
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
 
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.drawscope.Stroke
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.max
+import androidx.compose.ui.unit.sp
+import com.example.outlinetext.ui.text.FontOutLine
 import com.example.outlinetext.ui.text.TextOutLine
 import com.example.outlinetext.ui.theme.OutLineTextTheme
 
@@ -50,30 +60,61 @@ class MainActivity : ComponentActivity() {
 fun Greeting(modifier: Modifier = Modifier) {
     val text = "Text OutLine"
 
-    val mapleFont = FontFamily(
-        Font(R.font.font_maple)
-    )
+    Spacer(modifier = modifier.height(20.dp))
 
-    Column(modifier.fillMaxWidth().height(200.dp)) {
+
+    Column(modifier.fillMaxSize()) {
         Box(
-            modifier
+            Modifier
                 .fillMaxWidth()
-                .height(150.dp)
-                .background(Color(0xFF00BCD4))
-                .padding(top = 30.dp),
+                .wrapContentHeight(),
             contentAlignment = Alignment.Center
+//                .background(Color(0xFF00BCD4))
         ) {
+            TextOutLine(text = text, innerColor = Color(0xFFFFEB3B),
+                outlineColor = Color.Black, strokeWidth = 5f)
+        }
 
-            TextOutLine(text = text, innerColor = Color(0xFFFFEB3B)
-                , outlineColor = Color(0xFF000000),5f)
+        Spacer(modifier = modifier.height(20.dp))
 
+        val mapleFont = FontFamily(
+            Font(R.font.font_maple)
+        )
+
+        Box(
+            Modifier
+                .fillMaxWidth()
+                .wrapContentHeight()
+            , contentAlignment = Alignment.Center
+        ) {
+//            FontOutLine(
+//                text = text,
+//                innerColor = Color(0xFF00BCD4),
+//                outlineColor = Color.Black,
+//                font = mapleFont,
+//                strokeWidth = 5f,
+//                size = 60.sp
+//            )
+            Text(
+                text = text,
+                style = TextStyle(
+                    color = Color.Black,
+                    drawStyle = Stroke(
+                        width = 5f
+                    )
+                ),
+                fontFamily = mapleFont,
+                fontSize = 30.sp
+            )
+
+            Text(
+                text = text,
+                color = Color(0xFF00BCD4),
+                fontFamily = mapleFont,
+                fontSize = 30.sp
+            )
         }
     }
-
-
-
-
-
 
 }
 
