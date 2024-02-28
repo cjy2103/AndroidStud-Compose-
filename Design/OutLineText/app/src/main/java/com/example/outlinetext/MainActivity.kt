@@ -80,8 +80,7 @@ fun Greeting(modifier: Modifier = Modifier) {
 
         Spacer(modifier = modifier.height(20.dp))
 
-
-
+        
         Box(
             Modifier
                 .fillMaxWidth()
