@@ -3,11 +3,13 @@ package com.example.outlinetext.ui.text
 import android.graphics.Paint.Style
 import android.graphics.drawable.LayerDrawable
 import android.util.Size
+import androidx.compose.foundation.layout.Box
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.drawscope.Fill
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
@@ -39,6 +41,7 @@ fun TextOutLine(text : String, innerColor : Color, outlineColor : Color,
 @Composable
 fun FontOutLine(text : String, innerColor : Color, outlineColor : Color,
                 font : FontFamily,strokeWidth : Float, size : TextUnit){
+
     Text(
         text = text,
         style = TextStyle(
@@ -53,9 +56,14 @@ fun FontOutLine(text : String, innerColor : Color, outlineColor : Color,
 
     Text(
         text = text,
-        color = innerColor,
+        style = TextStyle(
+            color = innerColor,
+            drawStyle = Fill // 내부를 채우기 위해 Fill로 설정
+        ),
         fontFamily = font,
         fontSize = size
     )
+
+
 
 }

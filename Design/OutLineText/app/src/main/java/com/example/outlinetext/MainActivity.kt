@@ -62,6 +62,10 @@ fun Greeting(modifier: Modifier = Modifier) {
 
     Spacer(modifier = modifier.height(20.dp))
 
+    val mapleFont = FontFamily(
+        Font(R.font.font_maple)
+    )
+
 
     Column(modifier.fillMaxSize()) {
         Box(
@@ -69,7 +73,6 @@ fun Greeting(modifier: Modifier = Modifier) {
                 .fillMaxWidth()
                 .wrapContentHeight(),
             contentAlignment = Alignment.Center
-//                .background(Color(0xFF00BCD4))
         ) {
             TextOutLine(text = text, innerColor = Color(0xFFFFEB3B),
                 outlineColor = Color.Black, strokeWidth = 5f)
@@ -77,9 +80,7 @@ fun Greeting(modifier: Modifier = Modifier) {
 
         Spacer(modifier = modifier.height(20.dp))
 
-        val mapleFont = FontFamily(
-            Font(R.font.font_maple)
-        )
+
 
         Box(
             Modifier
@@ -87,34 +88,19 @@ fun Greeting(modifier: Modifier = Modifier) {
                 .wrapContentHeight()
             , contentAlignment = Alignment.Center
         ) {
-//            FontOutLine(
-//                text = text,
-//                innerColor = Color(0xFF00BCD4),
-//                outlineColor = Color.Black,
-//                font = mapleFont,
-//                strokeWidth = 5f,
-//                size = 60.sp
-//            )
-            Text(
-                text = text,
-                style = TextStyle(
-                    color = Color.Black,
-                    drawStyle = Stroke(
-                        width = 5f
-                    )
-                ),
-                fontFamily = mapleFont,
-                fontSize = 30.sp
+            FontOutLine(
+                text = "메이플 폰트",
+                innerColor = Color(0xFF00BCD4),
+                outlineColor = Color.Black,
+                font = mapleFont,
+                strokeWidth = 5f,
+                size = 60.sp
             )
 
-            Text(
-                text = text,
-                color = Color(0xFF00BCD4),
-                fontFamily = mapleFont,
-                fontSize = 30.sp
-            )
         }
     }
+
+
 
 }
 
@@ -122,6 +108,11 @@ fun Greeting(modifier: Modifier = Modifier) {
 @Composable
 fun GreetingPreview() {
     OutLineTextTheme {
-        Greeting()
+        Surface(
+            modifier = Modifier.fillMaxSize(),
+            color = MaterialTheme.colorScheme.background
+        ) {
+            Greeting()
+        }
     }
 }
