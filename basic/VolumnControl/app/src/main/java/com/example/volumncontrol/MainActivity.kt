@@ -30,7 +30,6 @@ import com.example.volumncontrol.ui.theme.VolumnControlTheme
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val audioManager = getSystemService(Context.AUDIO_SERVICE) as AudioManager
 
         setContent {
             VolumnControlTheme {
@@ -39,7 +38,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    Greeting(audioManager)
+                    Greeting()
                 }
             }
         }
@@ -47,7 +46,10 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun Greeting(audioManager: AudioManager) {
+fun Greeting() {
+
+    val context = LocalContext.current
+    val audioManager = context.getSystemService(Context.AUDIO_SERVICE) as AudioManager
 
     Column(
         modifier = Modifier.fillMaxSize(),
@@ -111,9 +113,6 @@ fun Greeting(audioManager: AudioManager) {
 @Composable
 fun GreetingPreview() {
     VolumnControlTheme {
-        val context = LocalContext.current
-        val audioManager = context.getSystemService(Context.AUDIO_SERVICE) as AudioManager
-
-        Greeting(audioManager)
+        Greeting()
     }
 }
