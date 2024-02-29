@@ -59,6 +59,7 @@
 
 =================== 디자인 ==================
 안드로이드(Android) Compose - Text 테두리, 테두리 색 글자 색다르게 하기 ( v )
+안드로이드(Android) Compose - PieChart 예제 ( v )
 
 
 그래프 만들기 (matplotlib)
