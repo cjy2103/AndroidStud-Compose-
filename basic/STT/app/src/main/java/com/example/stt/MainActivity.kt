@@ -57,7 +57,7 @@ fun Greeting(modifier: Modifier = Modifier) {
     ){
         Spacer(modifier = Modifier.height(200.dp))
 
-        Text(text = "Result: ${viewModel.sttText.value}")
+        Text(text = "Result: ${viewModel.sttText}")
 
         Spacer(modifier = Modifier.height(40.dp))
 

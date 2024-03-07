@@ -18,7 +18,11 @@ class SpeechToTextViewModel(application: Application) : ViewModel() {
         SpeechRecognizer.createSpeechRecognizer(application.applicationContext)
     }
 
-    val sttText = mutableStateOf("")
+    private val _sttText = mutableStateOf("")
+
+    val sttText : String get() = _sttText.value
+
+
 
     init {
         speechRecognizer.setRecognitionListener(object : RecognitionListener {
@@ -52,7 +56,7 @@ class SpeechToTextViewModel(application: Application) : ViewModel() {
                 if (!matches.isNullOrEmpty()) {
                     val resultText = matches[0]
                     Log.v("결과",resultText)
-                    sttText.value = resultText
+                    _sttText.value = resultText
                 }
             }
 
