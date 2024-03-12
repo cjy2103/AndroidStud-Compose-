@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.MaterialTheme
@@ -27,6 +28,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.edittext.ui.theme.EditTextTheme
@@ -66,6 +68,11 @@ fun Greeting(modifier: Modifier = Modifier) {
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         TextField(
+            modifier = Modifier.border(
+                width = 1.dp,
+                color = Color.Gray, // 테두리 색상
+                shape = RoundedCornerShape(4.dp) // 테두리 모양
+            ),
             value = textState.value,
             onValueChange = {
                 value -> textState.value = value
@@ -77,11 +84,7 @@ fun Greeting(modifier: Modifier = Modifier) {
                 unfocusedContainerColor = Color.Transparent,
                 unfocusedIndicatorColor = Color.Transparent
             ),
-            modifier = Modifier.border(
-                width = 1.dp,
-                color = Color.Gray, // 테두리 색상
-                shape = RoundedCornerShape(4.dp) // 테두리 모양
-            )
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text)
         )
 
         Spacer(modifier = Modifier.height(40.dp))
