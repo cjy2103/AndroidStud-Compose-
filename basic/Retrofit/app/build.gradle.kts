@@ -60,10 +60,6 @@ dependencies {
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
 
-    implementation(libs.squareup.retrofit2)
-    implementation(libs.squareup.retrofit2.gson)
-    implementation(libs.squareup.okhttp3)
-
     implementation(project(":domain"))
     implementation(project(":data"))
 

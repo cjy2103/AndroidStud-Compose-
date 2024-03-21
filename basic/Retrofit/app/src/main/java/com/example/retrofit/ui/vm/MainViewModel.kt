@@ -3,7 +3,7 @@ package com.example.retrofit.ui.vm
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.domain.repository.MainRepository
+import com.example.domain.repository.repository.MainRepository
 import kotlinx.coroutines.launch
 
 class MainViewModel : ViewModel() {

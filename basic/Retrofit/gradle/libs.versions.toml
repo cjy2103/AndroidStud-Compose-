@@ -13,8 +13,7 @@ retrofit = "2.7.1"
 retrofitGson = "2.6.0"
 okttp = "4.9.0"
 jetbrainsKotlinJvm = "1.9.0"
-appcompat = "1.6.1"
-material = "1.10.0"
+
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -35,8 +34,7 @@ androidx-material3 = { group = "androidx.compose.material3", name = "material3" 
 squareup-retrofit2 = {group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofit"}
 squareup-retrofit2-gson = {group = "com.squareup.retrofit2", name = "converter-gson", version.ref = "retrofitGson"}
 squareup-okhttp3 = {group = "com.squareup.okhttp3", name = "okhttp", version.ref = "okttp"}
-androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
-material = { group = "com.google.android.material", name = "material", version.ref = "material" }
+
 
 
 [plugins]
