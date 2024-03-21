@@ -64,6 +64,9 @@ dependencies {
     implementation(libs.squareup.retrofit2.gson)
     implementation(libs.squareup.okhttp3)
 
+    implementation(project(":domain"))
+    implementation(project(":data"))
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

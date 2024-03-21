@@ -18,11 +18,18 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.ViewModelProvider
 import com.example.retrofit.ui.theme.RetrofitTheme
+import com.example.retrofit.ui.vm.MainViewModel
 
 class MainActivity : ComponentActivity() {
+    private val viewModel : MainViewModel by lazy {
+        ViewModelProvider(this)[MainViewModel::class.java]
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         setContent {
             RetrofitTheme {
                 // A surface container using the 'background' color from the theme
@@ -30,7 +37,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    Greeting()
+                    Greeting(viewModel)
                 }
             }
         }
@@ -38,15 +45,15 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun Greeting(modifier: Modifier = Modifier) {
+fun Greeting(viewModel : MainViewModel,modifier: Modifier = Modifier) {
     Column(modifier = modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Text(
-                modifier = modifier.padding(top = 50.dp),
-                text = "Test"
+                modifier = modifier.padding(start = 10.dp,top = 50.dp),
+                text = viewModel.data.value
             )
-            Button(onClick = { /*TODO*/ },
+            Button(onClick = { viewModel.dataLoad() },
                 modifier = modifier
                     .padding(top = 30.dp)
                     .size(width = 150.dp, height = 40.dp),
@@ -64,6 +71,6 @@ fun Greeting(modifier: Modifier = Modifier) {
 @Composable
 fun GreetingPreview() {
     RetrofitTheme {
-        Greeting()
+        Greeting(MainViewModel())
     }
 }
