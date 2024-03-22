@@ -13,13 +13,22 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.ViewModelProvider
 import com.example.retrofitwebserver.ui.theme.RetrofitWebserverTheme
+import com.example.retrofitwebserver.ui.vm.MainViewModel
 
 class MainActivity : ComponentActivity() {
+
+    private val viewModel : MainViewModel by lazy {
+        ViewModelProvider(this)[MainViewModel::class.java]
+    }
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
@@ -29,7 +38,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    Greeting()
+                    Greeting(viewModel)
                 }
             }
         }
@@ -37,14 +46,17 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun Greeting(modifier: Modifier = Modifier) {
-    Column(modifier = modifier.fillMaxSize()){
+fun Greeting(viewModel : MainViewModel, modifier: Modifier = Modifier) {
+    Column(
+        modifier = modifier.fillMaxSize(),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ){
         Text(
             modifier = modifier.padding(top = 30.dp),
-            text = "test"
+            text = viewModel.data.value
         )
 
-        Button(onClick = {/* TODO */} ,
+        Button(onClick = { viewModel.dataLoad() } ,
             modifier = modifier
                 .padding(top = 30.dp)
                 .size(width = 150.dp, height = 40.dp),
@@ -62,6 +74,6 @@ fun Greeting(modifier: Modifier = Modifier) {
 @Composable
 fun GreetingPreview() {
     RetrofitWebserverTheme {
-        Greeting()
+        Greeting(MainViewModel())
     }
 }

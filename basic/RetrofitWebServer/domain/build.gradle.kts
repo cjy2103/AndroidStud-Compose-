@@ -8,8 +8,8 @@ java {
     targetCompatibility = JavaVersion.VERSION_17
 }
 
-dependencies {
+dependencies{
+    implementation(project(":data"))
     implementation(libs.squareup.retrofit2)
-    implementation(libs.squareup.retrofit2.gson)
-    implementation(libs.squareup.okhttp3)
+
 }

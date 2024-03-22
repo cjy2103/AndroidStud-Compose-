@@ -22,3 +22,4 @@ dependencyResolutionManagement {
 rootProject.name = "RetrofitWebserver"
 include(":app")
 include(":data")
+include(":domain")
