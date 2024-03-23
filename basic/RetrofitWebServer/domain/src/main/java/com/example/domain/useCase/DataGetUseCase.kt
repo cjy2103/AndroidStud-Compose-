@@ -1,8 +1,8 @@
 package com.example.domain.repository
 
-import com.example.data.repository.MainRepository
+import com.example.data.repository.DataRepository
 
-class DataGetUseCase(private val mainRepository: MainRepository) {
+class DataGetUseCase(private val mainRepository: DataRepository) {
 
     suspend fun fetchData(): String {
         return try {

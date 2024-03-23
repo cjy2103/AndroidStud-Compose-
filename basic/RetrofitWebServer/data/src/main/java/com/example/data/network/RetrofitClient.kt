@@ -7,7 +7,7 @@ import java.util.concurrent.TimeUnit
 
 object RetrofitClient {
     //Android 에서는 LocalHost Ip 접근 x 실제 본인이 접속중인 Ip주소를 확인후 넣어야 함.
-    private const val baseUri = "http://192.168.1.165:3000"
+    private const val baseUri = "http://Ip주소:포트번호" // 가상디바이스로 할거면 10.0.2.2:포트번호
     private var retrofit : Retrofit? = null
 
     fun getClient() : Retrofit {

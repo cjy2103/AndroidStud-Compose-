@@ -4,7 +4,7 @@ import com.example.data.data.Data
 import com.example.data.network.RetrofitClient
 import com.example.data.network.ServiceApi
 
-class MainRepository {
+class DataRepository {
     private val service = RetrofitClient.getClient().create(ServiceApi::class.java)
     suspend fun callData() : Data{
         return try {
