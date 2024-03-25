@@ -75,4 +75,5 @@
 
 그래프 만들기 (matplotlib)
 
-================ 모듈 분리 하기 ================
+=============== Server =================
+안드로이드(Android) Compose - Android + Node.js + MySQL 연동하기 / MySQL 통신하기 ( v )
