@@ -10,6 +10,4 @@ java {
 
 dependencies{
     implementation(project(":data"))
-    implementation(libs.squareup.retrofit2)
-
 }
