@@ -50,7 +50,8 @@
 
 안드로이드(Android) 컴포즈(Compose) - TextField Icon 넣기 ( v )
 
-안드로이드(Android) Compose - Retrofit 예제 ( v )
+안드로이드(Android) 컴포즈(Compose) - TextField 예제 / EditText ( v )
+
 
 ============ List 예제 =============
 
@@ -76,4 +77,6 @@
 그래프 만들기 (matplotlib)
 
 =============== Server =================
+안드로이드(Android) Compose - Retrofit 예제 ( v )
+
 안드로이드(Android) Compose - Android + Node.js + MySQL 연동하기 / MySQL 통신하기 ( v )
