@@ -76,16 +76,19 @@ fun Greeting(modifier: Modifier = Modifier) {
         Switch(
             modifier = modifier.padding(top = 20.dp),
             checked = checkedState.value,
+            colors = SwitchDefaults.colors(
+                checkedTrackColor = Color(0xFF85E989),
+                checkedBorderColor = Color.Black
+            ),
             onCheckedChange = { checkedState.value = it },
             thumbContent = {
                 Icon(
                     imageVector = Icons.Filled.Check,
                     contentDescription = null,
-                    modifier = Modifier.size()
+                    modifier = Modifier.size(SwitchDefaults.IconSize)
                 )
             }
         )
-
     }
 }
 
