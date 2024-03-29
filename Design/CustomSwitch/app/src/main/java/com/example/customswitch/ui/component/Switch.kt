@@ -1,7 +1,6 @@
 package com.example.customswitch.ui.component
 
 
-
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Canvas
