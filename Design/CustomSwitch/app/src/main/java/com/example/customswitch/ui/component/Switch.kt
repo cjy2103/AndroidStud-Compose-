@@ -113,8 +113,7 @@ fun CustomSwitch(checked : Boolean, onCheckedChange : (Boolean) -> Unit){
             .offset(x = (switchWidth - handleSize - handlePadding * 2f) * offset.value)
             .paint(painterResource(id = R.drawable.sun))
             .clip(CircleShape)
-        )
-            {
+        ) {
                 Image(
                     painter = painterResource(id = R.drawable.moon),
                     contentDescription = null ,
@@ -127,8 +126,6 @@ fun CustomSwitch(checked : Boolean, onCheckedChange : (Boolean) -> Unit){
             }
     }
 }
-
-
 @Preview(showBackground = true)
 @Composable
 fun CustomSwitchDarkPreview() {
