@@ -4,6 +4,6 @@ data class WifiInfo(
     val SSID: String,
     val BSSID: String,
     val level: Int,
-    val capabilities: String?,
+    val capabilities: String,
     val frequency: Int){
 }

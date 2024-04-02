@@ -3,16 +3,13 @@ package com.example.wifiselect.ui.data
 import android.annotation.SuppressLint
 import android.content.Context
 import android.net.wifi.WifiManager
-import android.os.Build
 import android.util.Log
-import androidx.annotation.RequiresApi
-import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.mutableStateOf
 
-class WifiInfoProvider() {
+class WifiInfoProvider {
 
-    fun filerList(context: Context): ArrayList<WifiInfo> {
+    fun filerList(context: Context): List<WifiInfo> {
         val wifiManager = context.getSystemService(Context.WIFI_SERVICE) as WifiManager
+
         @SuppressLint("MissingPermission")
         val wifiList = wifiManager.scanResults
 
@@ -28,14 +25,16 @@ class WifiInfoProvider() {
 
         // 로그 출력
         for (wifi in wifiList) {
-            Log.d("testtest",
+            Log.d(
+                "testtest",
                 WifiInfo(
                     wifi.SSID,
                     wifi.BSSID,
                     wifi.level,
                     wifi.capabilities,
                     wifi.frequency
-                ).toString())
+                ).toString()
+            )
             wifi.capabilities
         }
 
@@ -70,8 +69,23 @@ class WifiInfoProvider() {
             }
         }
 
-        return filteredWifiList
+        return filteredWifiList.sortedByDescending { it.level }
 
+    }
+
+    fun isCapability(capability : String) : Boolean {
+        return capability.contains("WPA") || capability.contains("WPA2")
+                || capability.contains("WEP")
+    }
+
+    fun parseFrequency(frequency : Int) : String{
+        return if(frequency in 2400..2484){
+            "2.4G"
+        } else if (frequency >= 5000){
+            "5G"
+        } else {
+            ""
+        }
     }
 
 
