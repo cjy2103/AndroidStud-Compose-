@@ -16,14 +16,14 @@ class WifiInfoProvider() {
         @SuppressLint("MissingPermission")
         val wifiList = wifiManager.scanResults
 
-        val wifiInfo = wifiManager.connectionInfo
-
-        Log.d("Wi-Fi 정보", "SSID: ${wifiInfo.ssid}")
-        Log.d("Wi-Fi 정보", "BSSID: ${wifiInfo.bssid}")
-        Log.d("Wi-Fi 정보", "신호 강도: ${wifiInfo.rssi}")
-        Log.d("Wi-Fi 정보", "연결 속도: ${wifiInfo.linkSpeed}")
-        Log.d("Wi-Fi 정보", "IP 주소: ${wifiInfo.ipAddress}")
-        Log.d("Wi-Fi 정보", "MAC 주소: ${wifiInfo.macAddress}")
+//        val wifiInfo = wifiManager.connectionInfo
+//
+//        Log.d("Wi-Fi 정보", "SSID: ${wifiInfo.ssid}")
+//        Log.d("Wi-Fi 정보", "BSSID: ${wifiInfo.bssid}")
+//        Log.d("Wi-Fi 정보", "신호 강도: ${wifiInfo.rssi}")
+//        Log.d("Wi-Fi 정보", "연결 속도: ${wifiInfo.linkSpeed}")
+//        Log.d("Wi-Fi 정보", "IP 주소: ${wifiInfo.ipAddress}")
+//        Log.d("Wi-Fi 정보", "MAC 주소: ${wifiInfo.macAddress}")
 //        Log.d("Wi-Fi 정보", "보안 유형: ${wifiInfo.currentSecurityType}")
 
         // 로그 출력
@@ -69,9 +69,6 @@ class WifiInfoProvider() {
                 )
             }
         }
-
-        Log.v("결과는?", filteredWifiList.toString())
-        Log.v("길이?", filteredWifiList.size.toString())
 
         return filteredWifiList
 

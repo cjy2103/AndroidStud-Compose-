@@ -58,9 +58,6 @@ fun Greeting(modifier: Modifier = Modifier) {
 
     val context = LocalContext.current
 
-    var text by remember { mutableStateOf("초기값") }
-
-
     Column(
         modifier = Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally
