@@ -21,3 +21,5 @@ dependencyResolutionManagement {
 
 rootProject.name = "Cassandra"
 include(":app")
+include(":domain")
+include(":data")
