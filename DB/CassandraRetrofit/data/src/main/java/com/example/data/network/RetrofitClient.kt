@@ -6,7 +6,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 
 object RetrofitClient {
-    private const val baseUrl = "http://192.168.137.99:3000"
+    private const val baseUrl = "http://Ip주소:포트번호"
     private var retrofit : Retrofit? = null
 
     fun getClient() : Retrofit {
