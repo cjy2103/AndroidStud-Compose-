@@ -2,10 +2,12 @@ package com.example.wifiselect
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -102,13 +104,21 @@ fun WiFiList(wifiList: SnapshotStateList<WifiInfo>) {
         contentPadding = PaddingValues(horizontal = 20.dp, vertical = 20.dp)
     ) {
         items(wifiList.size) { index ->
-            WifiItem(wifiInfo = wifiList[index])
+            WifiItem(wifiInfo = wifiList[index]){
+                if(it.second){
+                    Log.v("잠김","잠겼다리")
+                } else {
+                    val info = it.first
+                    Log.v("안잠겼다리","${info.SSID}")
+                }
+            }
         }
     }
 }
 
 @Composable
-fun WifiItem(wifiInfo: WifiInfo) {
+fun WifiItem(wifiInfo: WifiInfo, onItemClick: (Pair<WifiInfo,Boolean>) -> Unit
+) {
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -125,6 +135,9 @@ fun WifiItem(wifiInfo: WifiInfo) {
             modifier = Modifier
                 .fillMaxSize()
                 .padding(10.dp)
+                .clickable {
+                    onItemClick(Pair(wifiInfo,isWifiLock))
+                }
         ) {
             Image(painter = painterResource(id = signIcon), contentDescription = null )
             if(isWifiLock){
