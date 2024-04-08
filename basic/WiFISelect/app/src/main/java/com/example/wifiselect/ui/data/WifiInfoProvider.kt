@@ -2,8 +2,18 @@ package com.example.wifiselect.ui.data
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.Intent
+import android.net.ConnectivityManager
+import android.net.Network
+import android.net.NetworkCapabilities
+import android.net.NetworkRequest
+import android.net.wifi.WifiConfiguration
 import android.net.wifi.WifiManager
+import android.net.wifi.WifiNetworkSpecifier
+import android.net.wifi.WifiNetworkSuggestion
+import android.os.Build
 import android.util.Log
+import androidx.annotation.RequiresApi
 
 class WifiInfoProvider {
 
@@ -89,5 +99,171 @@ class WifiInfoProvider {
     }
 
 
+    @SuppressLint("ServiceCast", "MissingPermission")
+    fun wifiConnect(wifiInfo: WifiInfo, context: Context){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
 
+            val networkPass = "DESC1234!"
+
+
+            val wifiNetworkSpecifier: WifiNetworkSpecifier?
+
+
+            wifiNetworkSpecifier = WifiNetworkSpecifier.Builder().setSsid(wifiInfo.SSID)
+                .setWpa2Passphrase(networkPass).build()
+
+
+
+
+            val networkRequest = NetworkRequest.Builder()
+                .addTransportType(NetworkCapabilities.TRANSPORT_WIFI)
+                .removeCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET)
+                .setNetworkSpecifier(wifiNetworkSpecifier)
+                .build()
+
+            val connectivityManager =
+                context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager?
+
+            val networkCallback = object : ConnectivityManager.NetworkCallback() {
+                override fun onUnavailable() {
+                    super.onUnavailable()
+
+                    Log.v("11","111")
+                }
+
+                override fun onLosing(network: Network, maxMsToLive: Int) {
+                    super.onLosing(network, maxMsToLive)
+                    Log.v("222","2222")
+                }
+
+                override fun onAvailable(network: Network) {
+                    super.onAvailable(network)
+                    connectivityManager?.bindProcessToNetwork(network)
+                    Log.v("333","3333")
+
+                }
+
+                override fun onLost(network: Network) {
+                    super.onLost(network)
+                    Log.v("444","44444")
+                }
+            }
+
+            connectivityManager?.requestNetwork(networkRequest, networkCallback)
+
+
+//            val networkSuggestion = WifiNetworkSuggestion.Builder()
+//                .setSsid(wifiInfo.SSID)
+//                .setWpa2Passphrase("DECS1234!")
+//                .
+//                .build()
+//
+//            val networkSuggestionsList = listOf(networkSuggestion)
+//
+//            val wifiManager = context.getSystemService(Context.WIFI_SERVICE) as WifiManager
+//
+//            val status = wifiManager.addNetworkSuggestions(networkSuggestionsList)
+//
+//            if (status == WifiManager.STATUS_NETWORK_SUGGESTIONS_SUCCESS) {
+//                // WiFi 네트워크 제안이 성공적으로 추가되었으면 연결을 시도합니다.
+//                val intent = Intent(WifiManager.ACTION_PICK_WIFI_NETWORK)
+////                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+////                context.startActivity(intent)
+//                Log.v("그래","ㅇㅇㅇㅇㅇㅇ")
+//
+//            } else {
+//                // WiFi 네트워크 제안 추가에 실패한 경우 처리 로직을 추가합니다.
+//                // 예를 들어 사용자에게 알림을 표시할 수 있습니다.
+//                Log.v("안돼","ㅇㅇㅇㅇㅇㅇ")
+//            }
+
+        } else {
+            val wifiConfig = WifiConfiguration().apply {
+                SSID = "\"${wifiInfo.SSID}\""
+                allowedKeyManagement.set(WifiConfiguration.KeyMgmt.NONE) // 오픈 WiFi 설정
+//                preSharedKey = "\"$key\""
+            }
+
+            val wifiManager = context.getSystemService(Context.WIFI_SERVICE) as WifiManager
+            // 네트워크 추가
+            val netId = wifiManager.addNetwork(wifiConfig)
+            wifiManager.disconnect()
+            wifiManager.enableNetwork(netId, true)
+            wifiManager.reconnect()
+        }
+    }
+
+    @SuppressLint("ServiceCast", "MissingPermission")
+    fun wifiOpenConnect(wifiInfo: WifiInfo, context: Context){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+//            val networkSpecifier = WifiNetworkSpecifier.Builder()
+//                .setSsid(wifiInfo.SSID)
+//                .setWpa2Passphrase(null.toString()) // 비밀번호 없는 open 네트워크이므로 null 설정
+//                .build()
+//
+//            val networkRequest = NetworkRequest.Builder()
+//                .addTransportType(NetworkCapabilities.TRANSPORT_WIFI)
+//                .setNetworkSpecifier(networkSpecifier)
+//                .build()
+//
+//            val connectivityManager = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+//            val networkCallback = object : ConnectivityManager.NetworkCallback() {
+//                override fun onAvailable(network: Network) {
+//                    // WiFi 네트워크 사용 가능 시 동작할 내용을 여기에 구현
+//                    super.onAvailable(network)
+//                    // 예: 네트워크 사용 가능 시 처리
+//                }
+//
+//                override fun onUnavailable() {
+//                    // WiFi 네트워크 사용 불가능 시 동작할 내용을 여기에 구현
+//                    super.onUnavailable()
+//                    // 예: 네트워크 사용 불가능 시 처리
+//                }
+//            }
+//
+//            connectivityManager.requestNetwork(networkRequest, networkCallback)
+
+            val wifiNetworkSpecifier: WifiNetworkSpecifier?
+
+                wifiNetworkSpecifier =
+                    WifiNetworkSpecifier.Builder().setSsid(wifiInfo.SSID).build()
+
+            val networkRequest = NetworkRequest.Builder()
+                .addTransportType(NetworkCapabilities.TRANSPORT_WIFI)
+                .setNetworkSpecifier(wifiNetworkSpecifier)
+                .build()
+
+            val connectivityManager =
+                context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager?
+
+            val networkCallback = object : ConnectivityManager.NetworkCallback() {
+
+                override fun onAvailable(network: Network) {
+                    super.onAvailable(network)
+                    connectivityManager?.bindProcessToNetwork(network)
+                }
+
+                override fun onLost(network: Network) {
+                    super.onLost(network)
+
+                }
+            }
+
+            connectivityManager?.requestNetwork(networkRequest, networkCallback)
+
+            } else {
+            val wifiConfig = WifiConfiguration().apply {
+                SSID = "\"${wifiInfo.SSID}\""
+                allowedKeyManagement.set(WifiConfiguration.KeyMgmt.NONE) // 오픈 WiFi 설정
+            }
+
+            val wifiManager = context.getSystemService(Context.WIFI_SERVICE) as WifiManager
+            // 네트워크 추가
+            val netId = wifiManager.addNetwork(wifiConfig)
+            wifiManager.disconnect()
+            wifiManager.enableNetwork(netId, true)
+            wifiManager.reconnect()
+        }
+    }
 }
+

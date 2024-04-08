@@ -1,6 +1,7 @@
 package com.example.wifiselect
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.ComponentActivity
@@ -39,6 +40,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.core.content.ContextCompat.getSystemService
 import com.example.wifiselect.ui.data.WifiInfo
 import com.example.wifiselect.ui.data.WifiInfoProvider
 import com.example.wifiselect.ui.theme.WiFISelectTheme
@@ -98,6 +100,7 @@ fun Greeting(modifier: Modifier = Modifier) {
 
 @Composable
 fun WiFiList(wifiList: SnapshotStateList<WifiInfo>) {
+    val context = LocalContext.current.applicationContext
     LazyColumn(
         modifier = Modifier
             .fillMaxSize(),
@@ -107,9 +110,12 @@ fun WiFiList(wifiList: SnapshotStateList<WifiInfo>) {
             WifiItem(wifiInfo = wifiList[index]){
                 if(it.second){
                     Log.v("잠김","잠겼다리")
+                    WifiInfoProvider().wifiConnect(it.first,context)
+
                 } else {
                     val info = it.first
                     Log.v("안잠겼다리","${info.SSID}")
+                    WifiInfoProvider().wifiOpenConnect(it.first,context)
                 }
             }
         }
