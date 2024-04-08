@@ -103,7 +103,7 @@ class WifiInfoProvider {
     fun wifiConnect(wifiInfo: WifiInfo, context: Context){
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
 
-            val networkPass = "DESC1234!"
+            val networkPass = ""
 
 
             val wifiNetworkSpecifier: WifiNetworkSpecifier?
