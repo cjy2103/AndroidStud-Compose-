@@ -58,6 +58,9 @@ Android(안드로이드) Compose - WIFI List 보여주기 ( v )
 
 Android(안드로이드) Compose - WIFI 아이콘 추가하기, 주파수대역 추가하기 ( v )
 
+Android(안드로이드) Compose - WIFI 설정 페이지 이동, 돌아왔을때 Network 상태체크 ( )
+
+
 
 ============ List 예제 =============
 
