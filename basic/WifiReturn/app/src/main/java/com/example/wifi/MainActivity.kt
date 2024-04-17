@@ -1,9 +1,13 @@
 package com.example.wifi
 
+import android.annotation.SuppressLint
 import android.content.Context
+import android.content.Intent
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.os.Bundle
+import android.provider.Settings
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.Column
@@ -28,6 +32,8 @@ import androidx.compose.ui.unit.dp
 import com.example.wifi.ui.theme.WifiTheme
 
 class MainActivity : ComponentActivity() {
+
+    private val wifiConnect = mutableStateOf("초기값")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
@@ -37,17 +43,21 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    Greeting()
+                    Greeting(wifiConnect)
                 }
             }
         }
     }
+
+    override fun onResume() {
+        super.onResume()
+        checkWifi(this, wifiConnect)
+    }
 }
 
 @Composable
-fun Greeting(modifier: Modifier = Modifier) {
+fun Greeting(wifiConnect: MutableState<String> ,modifier: Modifier = Modifier) {
 
-    val wifiConnect = remember { mutableStateOf("초기상태") }
     val context = LocalContext.current
 
     Column(
@@ -88,19 +98,21 @@ fun checkWifi(context: Context, wifiConnect: MutableState<String>){
                 wifiConnect.value = "WIFI 연결됨"
             }
             networkCapabilities.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) -> {
-                wifiConnect.value = "모바일 데이터 연결됨"
+                context.startActivities(arrayOf(Intent(Settings.ACTION_WIFI_SETTINGS)))
             }
         }
     } else {
+        context.startActivities(arrayOf(Intent(Settings.ACTION_WIFI_SETTINGS)))
         wifiConnect.value = "네트워크 연결 끊어짐"
     }
 
 }
 
+@SuppressLint("UnrememberedMutableState")
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 fun GreetingPreview() {
     WifiTheme {
-        Greeting()
+        Greeting(mutableStateOf("초기값"))
     }
 }
