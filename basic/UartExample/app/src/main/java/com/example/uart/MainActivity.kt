@@ -2,59 +2,67 @@ package com.example.uart
 
 import android.hardware.usb.UsbManager
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.example.uart.ui.theme.UartTheme
+import androidx.compose.ui.unit.dp
+
+
 
 class MainActivity : ComponentActivity() {
 
-    private val uartViewModel: UartViewModel by viewModels()
+    companion object {
+        // Ensure the native library is loaded
+        init {
+            System.loadLibrary("native-lib")
+        }
+    }
+
+    external fun stringFromJNI(): String
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
+
+
         setContent {
-            UartTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
-                        modifier = Modifier.padding(innerPadding)
-                    )
-                }
-            }
+            UARTCommunicationScreen()
         }
     }
-}
 
-@Composable
-fun Greeting(modifier: Modifier = Modifier) {
-    Text(
-        text = "시리얼 통신 예제",
-        modifier = modifier
-    )
 
-    Button(onClick = { sendMsg() }) {
-        Text(text = "시리얼 통신")
+
+    @Composable
+    fun UARTCommunicationScreen() {
+        val nativeText = stringFromJNI()
+
+        Text(text = nativeText)
+
     }
-}
 
-fun sendMsg(){
-
-}
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    UartTheme {
-        Greeting()
+    @Preview(showBackground = true)
+    @Composable
+    fun DefaultPreview() {
+        UARTCommunicationScreen()
     }
+
 }

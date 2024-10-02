@@ -23,7 +23,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.FloatState
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -37,7 +36,6 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.example.animationtext.ui.theme.AnimationTextTheme
 import kotlinx.coroutines.delay
-import org.w3c.dom.Text
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -103,6 +101,7 @@ fun Greeting(modifier: Modifier = Modifier) {
     }
 }
 
+// 깜빡 거리는 효과
 @Composable
 fun blinkText() : Float{
     val infiniteTransition = rememberInfiniteTransition()
@@ -118,6 +117,7 @@ fun blinkText() : Float{
     return alpha
 }
 
+// 슬라이드 효과
 @Composable
 fun slideInOut() : Dp {
     var visible by remember { mutableStateOf(true) }
@@ -138,6 +138,7 @@ fun slideInOut() : Dp {
     return offset
 }
 
+// 색변경 효과
 @Composable
 fun colorChange() : Color {
     var isActive by remember { mutableStateOf(true) }
@@ -157,6 +158,7 @@ fun colorChange() : Color {
     return color
 }
 
+// 타이핑 효과
 @Composable
 fun textTyping() : String {
     var displayedText by remember { mutableStateOf("") }
@@ -179,6 +181,7 @@ fun textTyping() : String {
     return displayedText
 }
 
+// 회전 효과
 @Composable
 fun rotateText() : Float {
     var rotating by remember { mutableStateOf(true) }
