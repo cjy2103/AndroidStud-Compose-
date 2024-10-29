@@ -109,16 +109,6 @@ fun Greeting(modifier: Modifier = Modifier, bluetoothViewModel: BluetoothViewMod
             }
         }
 
-        // 페어링된 장비 목록 표시
-        Text("Paired Devices:", modifier = Modifier.padding(bottom = 8.dp))
-        LazyColumn {
-            items(bluetoothViewModel.bondedDevices.size) { index ->
-                val device = bluetoothViewModel.bondedDevices[index]
-                val deviceInfo = "${device.name} (${device.address})"
-                Text(deviceInfo, modifier = Modifier.padding(vertical = 4.dp))
-            }
-        }
-
     }
 }
 
