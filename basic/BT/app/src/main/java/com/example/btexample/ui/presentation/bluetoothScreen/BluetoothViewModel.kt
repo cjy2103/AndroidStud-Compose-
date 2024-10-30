@@ -1,4 +1,4 @@
-package com.example.btexample.ui.viewModel
+package com.example.btexample.ui.presentation.bluetoothScreen
 
 import android.Manifest
 import android.annotation.SuppressLint
@@ -14,8 +14,13 @@ import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.core.app.ActivityCompat
 import androidx.lifecycle.AndroidViewModel
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 
-class BluetoothViewModel(application: Application) : AndroidViewModel(application) {
+@HiltViewModel
+class BluetoothViewModel @Inject constructor(
+    application: Application
+) : AndroidViewModel(application) {
 
     private val bluetoothAdapter: BluetoothAdapter? = BluetoothAdapter.getDefaultAdapter()
     @SuppressLint("StaticFieldLeak")
