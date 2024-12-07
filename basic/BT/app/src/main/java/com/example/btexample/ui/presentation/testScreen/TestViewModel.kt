@@ -1,25 +1,25 @@
 package com.example.btexample.ui.presentation.testScreen
 
+import android.annotation.SuppressLint
+import android.bluetooth.BluetoothDevice
+import android.bluetooth.BluetoothSocket
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
+import java.io.IOException
 import javax.inject.Inject
 
 @HiltViewModel
 class TestViewModel @Inject constructor() : ViewModel() {
 
-    private val _pairDevice = mutableStateOf("")
-    val pairDevice : State<String> = _pairDevice
-
+    // 텍스트 상태 관리
     private val _textState = mutableStateOf("")
-    val textState : State<String> = _textState
+    val textState: State<String> get() = _textState
 
-    fun onTextChanged(newText : String) {
+    // 텍스트 변경 함수
+    fun onTextChanged(newText: String) {
         _textState.value = newText
     }
 
-    fun onPairChanged(newDevice : String){
-        _pairDevice.value = newDevice
-    }
 }

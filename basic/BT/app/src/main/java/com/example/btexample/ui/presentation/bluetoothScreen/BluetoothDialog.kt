@@ -7,14 +7,17 @@ import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
@@ -52,13 +55,16 @@ fun BluetoothDialog(
                 .padding(16.dp)
                 .background(Color.White, shape = RoundedCornerShape(8.dp))
         ) {
-            Text(
-                text = "Bluetooth Device Scanner",
-                modifier = Modifier.padding(16.dp),
-                style = MaterialTheme.typography.headlineMedium
-            )
+            Box(
+                modifier = Modifier
+                    .height(40.dp)
+                    .padding(5.dp),
+                contentAlignment = Alignment.Center // Text를 중앙에 정렬
+            ) {
+                Text(text = "BT 스캔")
+            }
 
-            Spacer(modifier = Modifier.height(16.dp))
+            Spacer(modifier = Modifier.height(10.dp))
 
             Button(
                 onClick = {
@@ -71,18 +77,65 @@ fun BluetoothDialog(
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            Text("Paired Devices:", modifier = Modifier.padding(16.dp))
+            Text("지금 연결된 기기:", modifier = Modifier.padding(10.dp))
 
             LazyColumn(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .heightIn(max = 200.dp) // 팝업 크기 제한
-                    .padding(16.dp)
+                    .heightIn(max = 100.dp)
             ) {
-                items(bluetoothViewModel.pairedDevices.size) { index ->
-                    val device = bluetoothViewModel.pairedDevices[index]
-                    val deviceInfo = "${device.name} (${device.address})"
+                items(bluetoothViewModel.connectedDevices.size) { index ->
+                    val device = bluetoothViewModel.connectedDevices[index]
 
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(vertical = 4.dp)
+                            .clickable {
+                                bluetoothViewModel.disconnectDevice(device)
+                            }
+                    ) {
+                        Text("${device.name} (${device.address})", modifier = Modifier.padding(8.dp))
+                    }
+                }
+            }
+
+            Text("기존에 페어링된 기기:")
+
+            LazyColumn(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .heightIn(max = 100.dp) // 팝업 크기 제한
+
+            ) {
+                items(bluetoothViewModel.bondedDevices.size) { index ->
+                    val device = bluetoothViewModel.bondedDevices[index]
+
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(vertical = 4.dp)
+                            .clickable {
+//                                bluetoothViewModel.pairDevice(device)
+                                bluetoothViewModel.connectToDevice(device)
+                            }
+                    ) {
+                        Text("${device.name} (${device.address})", modifier = Modifier.padding(8.dp))
+                    }
+                }
+            }
+
+            Text(text = "검색된 기기")
+
+            LazyColumn(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .heightIn(max = 150.dp) // 팝업 크기 제한
+
+            ) {
+
+                items(bluetoothViewModel.discoveredDevices.size) { index ->
+                    val device = bluetoothViewModel.discoveredDevices[index]
                     Row(
                         modifier = Modifier
                             .fillMaxWidth()
@@ -91,7 +144,7 @@ fun BluetoothDialog(
                                 bluetoothViewModel.pairDevice(device)
                             }
                     ) {
-                        Text(deviceInfo, modifier = Modifier.padding(8.dp))
+                        Text("${device.name} (${device.address})", modifier = Modifier.padding(8.dp))
                     }
                 }
             }
@@ -100,7 +153,9 @@ fun BluetoothDialog(
 
             Button(
                 onClick = { onDismissRequest() },
-                modifier = Modifier.align(Alignment.End).padding(16.dp)
+                modifier = Modifier
+                    .align(Alignment.End)
+                    .padding(16.dp)
             ) {
                 Text("Close")
             }
