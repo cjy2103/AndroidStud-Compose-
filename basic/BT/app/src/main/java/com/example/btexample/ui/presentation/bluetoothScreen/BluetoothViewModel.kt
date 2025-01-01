@@ -13,35 +13,44 @@ import android.content.Intent
 import android.content.IntentFilter
 import android.content.pm.PackageManager
 import android.util.Log
+import android.widget.Toast
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.core.app.ActivityCompat
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.btexample.data.SpeedDataStore
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import java.io.IOException
 import java.util.UUID
 import javax.inject.Inject
+import javax.inject.Singleton
 
 @HiltViewModel
 class BluetoothViewModel @Inject constructor(
-    application: Application
+    application: Application,
+    private val dataStore: SpeedDataStore
 ) : AndroidViewModel(application) {
 
     private val bluetoothManager = application.getSystemService(Context.BLUETOOTH_SERVICE) as BluetoothManager
     private val bluetoothAdapter: BluetoothAdapter? = bluetoothManager.adapter
     @SuppressLint("StaticFieldLeak")
-    private val context = getApplication<Application>().applicationContext
+    private val context = application.applicationContext
 
     val pairedDevices = mutableStateListOf<BluetoothDevice>()
-    val discoveredDevices = mutableStateListOf<BluetoothDevice>() // 새로 검색된 기기 목록
-    val bondedDevices = mutableStateListOf<BluetoothDevice>() // 연결된 장비 리스트
-
-    val connectedDevices = mutableStateListOf<BluetoothDevice>() // 실제 연결된 기기 목록
+    val discoveredDevices = mutableStateListOf<BluetoothDevice>()
+    val bondedDevices = mutableStateListOf<BluetoothDevice>()
+    val connectedDevices = mutableStateListOf<BluetoothDevice>()
     private val activeConnections = mutableMapOf<BluetoothDevice, BluetoothSocket?>()
+
+    private val _currentSpeed = MutableStateFlow(90)
+    val currentSpeed: StateFlow<Int> = _currentSpeed.asStateFlow()
 
     private val receiver = object : BroadcastReceiver() {
         @SuppressLint("MissingPermission")
@@ -50,17 +59,14 @@ class BluetoothViewModel @Inject constructor(
                 BluetoothDevice.ACTION_FOUND -> {
                     val device: BluetoothDevice? = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE)
                     device?.let {
-                        // 중복되지 않는 새 기기만 추가
                         if (!discoveredDevices.any { it.address == device.address }) {
                             discoveredDevices.add(device)
                         }
                     }
                 }
-
                 BluetoothDevice.ACTION_BOND_STATE_CHANGED -> {
                     val device: BluetoothDevice? = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE)
                     if (device?.bondState == BluetoothDevice.BOND_BONDED) {
-                        // 페어링 성공 시, bondedDevices 리스트에 추가
                         if (!bondedDevices.contains(device)) {
                             bondedDevices.add(device)
                         }
@@ -70,11 +76,12 @@ class BluetoothViewModel @Inject constructor(
         }
     }
 
-
     init {
         val filter = IntentFilter(BluetoothDevice.ACTION_FOUND)
         context.registerReceiver(receiver, filter)
+
         loadBondedDevices()
+        loadSavedSpeed()
     }
 
     @SuppressLint("MissingPermission")
@@ -84,26 +91,21 @@ class BluetoothViewModel @Inject constructor(
     }
 
     fun startScan() {
-
         if (ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            // 위치 권한이 없으면 스캔을 시작하지 않습니다.
             return
         }
-
-        discoveredDevices.clear() // 새로 검색된 기기 목록 초기화
+        discoveredDevices.clear()
         bluetoothAdapter?.startDiscovery()
     }
 
     @SuppressLint("MissingPermission")
     fun pairDevice(device: BluetoothDevice) {
-        device.createBond()  // 페어링 시도
-        Log.v("페어링 시도중","페어링")
+        device.createBond()
     }
 
     @SuppressLint("MissingPermission")
     fun connectToDevice(device: BluetoothDevice) {
         viewModelScope.launch(Dispatchers.IO) {
-            // SPP UUID 사용
             val uuid = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB")
             val maxRetries = 3
             val retryDelayMillis = 1000L
@@ -113,92 +115,73 @@ class BluetoothViewModel @Inject constructor(
 
             while (attempt < maxRetries) {
                 try {
-                    Log.v("BluetoothViewModel", "Attempting connection: Attempt $attempt")
-
-                    // 소켓 생성 및 연결
                     bluetoothSocket = device.createRfcommSocketToServiceRecord(uuid)
                     bluetoothAdapter?.cancelDiscovery()
                     bluetoothSocket.connect()
 
-                    // 연결 성공 시 처리
                     activeConnections[device] = bluetoothSocket
                     if (!connectedDevices.contains(device)) {
                         connectedDevices.add(device)
                     }
-                    Log.d("BluetoothViewModel", "Successfully connected to ${device.name}")
                     break
                 } catch (e: IOException) {
-                    Log.e("BluetoothViewModel", "Connection attempt $attempt failed. Retrying...", e)
-
-                    // 연결 실패 시 소켓 닫기
                     try {
                         bluetoothSocket?.close()
-                    } catch (closeException: IOException) {
-                        Log.e("BluetoothViewModel", "Failed to close socket after connection failure", closeException)
-                    }
-
-                    // 재시도
+                    } catch (_: IOException) {}
                     attempt++
-                    if (attempt < maxRetries) {
-                        delay(retryDelayMillis)
-                    } else {
-                        Log.e("BluetoothViewModel", "Max retries reached. Unable to connect to ${device.name}")
-                    }
+                    if (attempt < maxRetries) delay(retryDelayMillis)
                 }
             }
         }
     }
-
-    @SuppressLint("MissingPermission")
-    fun fetchDeviceUuids(device: BluetoothDevice) {
-        val filter = IntentFilter(BluetoothDevice.ACTION_UUID)
-
-        // UUID 검색 결과를 수신하는 BroadcastReceiver 등록
-        val uuidReceiver = object : BroadcastReceiver() {
-            override fun onReceive(context: Context, intent: Intent) {
-                val action = intent.action
-                if (BluetoothDevice.ACTION_UUID == action) {
-                    val device = intent.getParcelableExtra<BluetoothDevice>(BluetoothDevice.EXTRA_DEVICE)
-                    val uuids = device?.uuids
-
-                    if (uuids != null) {
-                        // UUID 목록을 로그로 출력
-                        uuids.forEach { uuid ->
-                            Log.d("BluetoothUUID", "UUID found: ${uuid.uuid}")
-                        }
-                    } else {
-                        Log.d("BluetoothUUID", "No UUIDs found for device: ${device?.name}")
-                    }
-
-                    // 검색 완료 후 Receiver 등록 해제
-                    context.unregisterReceiver(this)
-                }
-            }
-        }
-
-        // BroadcastReceiver 등록
-        context.registerReceiver(uuidReceiver, filter)
-
-        // UUID 검색 요청
-        device.fetchUuidsWithSdp()
-    }
-
 
     @SuppressLint("MissingPermission")
     fun disconnectDevice(device: BluetoothDevice) {
         activeConnections[device]?.apply {
             try {
-                close() // Bluetooth 소켓 닫기
-            } catch (e: IOException) {
-                Log.e("BluetoothViewModel", "Unable to disconnect device: ${device.name}", e)
-            } finally {
+                close()
+            } catch (_: IOException) {}
+            finally {
                 activeConnections.remove(device)
                 connectedDevices.remove(device)
             }
         }
     }
 
-    // Bluetooth 데이터 전송 메서드
+    fun increaseSpeed() {
+        if (_currentSpeed.value < 150) {
+            val newSpeed = _currentSpeed.value + 10
+            _currentSpeed.value = newSpeed
+            saveSpeed(newSpeed)
+            sendDataToDevice("<ACMSP3INC>")
+        } else {
+            Toast.makeText(context, "최대속도 150 도달 속도를 더 올릴수 없습니다..", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    fun decreaseSpeed() {
+        if (_currentSpeed.value > 30) {
+            val newSpeed = _currentSpeed.value - 10
+            _currentSpeed.value = newSpeed
+            saveSpeed(newSpeed)
+            sendDataToDevice("<ACMSP3DEC>")
+        } else {
+            Toast.makeText(context, "최소속도 30도달 속도를 더 줄일수 없습니다.", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private fun saveSpeed(speed: Int) {
+        viewModelScope.launch {
+            dataStore.saveSpeed(speed)
+        }
+    }
+
+    private fun loadSavedSpeed() {
+        viewModelScope.launch {
+            _currentSpeed.value = dataStore.getSpeed() ?: 90
+        }
+    }
+
     @SuppressLint("MissingPermission")
     fun sendDataToDevice(data: String) {
         val connectedDevice = connectedDevices.firstOrNull()
@@ -207,19 +190,21 @@ class BluetoothViewModel @Inject constructor(
         if (socket != null && socket.isConnected) {
             try {
                 socket.outputStream.write(data.toByteArray())
-                Log.d("BluetoothViewModel", "Data sent: $data")
-            } catch (e: IOException) {
-                Log.e("BluetoothViewModel", "Failed to send data: ${e.message}", e)
-            }
-        } else {
-            Log.e("BluetoothViewModel", "No connected device or socket is not connected")
+            } catch (_: IOException) {}
         }
     }
 
-
     override fun onCleared() {
-        super.onCleared()
-        context.unregisterReceiver(receiver)
+        // 연결 유지 (명시적으로 종료하고 싶을 때만 호출)
     }
 
+    fun clearAllConnections() {
+        activeConnections.values.forEach { socket ->
+            try {
+                socket?.close()
+            } catch (_: IOException) {}
+        }
+        activeConnections.clear()
+        connectedDevices.clear()
+    }
 }
