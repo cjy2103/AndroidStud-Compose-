@@ -28,6 +28,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -61,6 +62,12 @@ fun MoveScreen(
     val currentSpeed by bluetoothViewModel.currentSpeed.collectAsState()
 
     var isDialogOpen by remember { mutableStateOf(false) }
+
+
+    LaunchedEffect(Unit) {
+        bluetoothViewModel.sendDataToDevice("<APCMENTERMOVE>")
+    }
+
 
     Box(
         modifier = Modifier
