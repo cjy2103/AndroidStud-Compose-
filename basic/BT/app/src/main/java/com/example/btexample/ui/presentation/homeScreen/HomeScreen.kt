@@ -1,6 +1,8 @@
 package com.example.btexample.ui.presentation.homeScreen
 
+import android.Manifest
 import android.annotation.SuppressLint
+import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -18,6 +20,7 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -32,7 +35,6 @@ import com.example.btexample.navigation.ScreenNavItem
 import com.example.btexample.ui.presentation.bluetoothScreen.BluetoothDialog
 import com.example.btexample.ui.presentation.bluetoothScreen.BluetoothViewModel
 
-@SuppressLint("MissingPermission")
 @Composable
 fun HomeScreen(
     navController: NavHostController,
@@ -40,6 +42,7 @@ fun HomeScreen(
 ) {
     var isDialogOpen by remember { mutableStateOf(false) }
     val connectedDevice = bluetoothViewModel.connectedDevices.firstOrNull()
+
 
     Column(
         modifier = Modifier
