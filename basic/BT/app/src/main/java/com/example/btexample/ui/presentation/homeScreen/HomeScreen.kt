@@ -35,6 +35,7 @@ import com.example.btexample.navigation.ScreenNavItem
 import com.example.btexample.ui.presentation.bluetoothScreen.BluetoothDialog
 import com.example.btexample.ui.presentation.bluetoothScreen.BluetoothViewModel
 
+@SuppressLint("MissingPermission")
 @Composable
 fun HomeScreen(
     navController: NavHostController,

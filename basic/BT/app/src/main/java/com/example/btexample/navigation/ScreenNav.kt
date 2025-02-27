@@ -11,6 +11,7 @@ import com.example.btexample.ui.presentation.bluetoothScreen.BluetoothScreen
 import com.example.btexample.ui.presentation.bluetoothScreen.BluetoothViewModel
 import com.example.btexample.ui.presentation.homeScreen.HomeScreen
 import com.example.btexample.ui.presentation.moveScreen.MoveScreen
+import com.example.btexample.ui.presentation.permissionScreen.PermissionScreen
 import com.example.btexample.ui.presentation.sinarioScreen.LemmyCallScreen
 import com.example.btexample.ui.presentation.sinarioScreen.LemmyEmergencyScreen
 import com.example.btexample.ui.presentation.sinarioScreen.LemmyNightEscortScreen
@@ -66,5 +67,26 @@ fun ScreenHost(navController: NavHostController) {
             BluetoothScreen()
         }
 
+    }
+}
+
+@Composable
+fun PermissionScreenHost(navController: NavHostController) {
+    NavHost(
+        navController = navController,
+        startDestination = ScreenNavItem.Permission.route, // Permission 화면을 시작점으로 설정
+        enterTransition = {
+            EnterTransition.None
+        },
+        exitTransition = {
+            ExitTransition.None
+        }
+    ) {
+        composable(ScreenNavItem.Permission.route) {
+            PermissionScreen(navController)
+        }
+
+        // 필요하다면 권한과 관련된 다른 화면도 추가
+        // 예: 권한 관련 설정 화면, 도움말 화면 등
     }
 }

@@ -84,7 +84,7 @@ fun ScenarioScreen(
         ) {
             Button(
                 onClick = {
-                    bluetoothViewModel.sendDataToDevice("<ACCLL4HOME>") // 거실 도착 명령
+                    bluetoothViewModel.sendDataToDevice("<ACCLL4HOME>") // 거실 출발 명령
                 },
                 modifier = Modifier.size(width = 250.dp, height = 50.dp),
                 colors = ButtonDefaults.buttonColors(
@@ -97,7 +97,7 @@ fun ScenarioScreen(
 
             Button(
                 onClick = {
-                    bluetoothViewModel.sendDataToDevice("<ACCLL4ROOM>") // 방 도착 명령
+                    bluetoothViewModel.sendDataToDevice("<ACCLL4ROOM>") // 방 출발 명령
                 },
                 modifier = Modifier.size(width = 250.dp, height = 50.dp),
                 colors = ButtonDefaults.buttonColors(
@@ -110,7 +110,7 @@ fun ScenarioScreen(
 
             Button(
                 onClick = {
-                    bluetoothViewModel.sendDataToDevice("<ACCLL4BATH>") // 화장실 도착 명령
+                    bluetoothViewModel.sendDataToDevice("<ACCLL4BATH>") // 화장실 출발 명령
                 },
                 modifier = Modifier.size(width = 250.dp, height = 50.dp),
                 colors = ButtonDefaults.buttonColors(
