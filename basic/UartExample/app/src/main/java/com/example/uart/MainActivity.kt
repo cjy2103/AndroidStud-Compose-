@@ -7,7 +7,10 @@ import android.content.Intent
 import android.content.IntentFilter
 import android.hardware.usb.UsbDevice
 import android.hardware.usb.UsbManager
+import android.os.Build
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -34,6 +37,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.core.content.ContextCompat
 import androidx.core.content.ContextCompat.getSystemService
 import com.example.uart.ui.theme.UartTheme
 import com.hoho.android.usbserial.driver.UsbSerialDriver
@@ -50,20 +54,74 @@ class MainActivity : ComponentActivity() {
         // BroadcastReceiver 등록
         usbReceiver = object : BroadcastReceiver() {
             override fun onReceive(context: Context, intent: Intent) {
+                Log.d("USB", "Received broadcast: ${intent.action}")
+
                 if ("com.example.USB_PERMISSION" == intent.action) {
-                    val device = intent.getParcelableExtra<UsbDevice>(UsbManager.EXTRA_DEVICE)
+                    Log.d("USB", "Intent Extras: ${intent.extras}")
+
+                    val bundle = intent.extras
+                    if (bundle == null) {
+                        Log.e("USB", "Intent extras are NULL!")
+                        return
+                    } else {
+                        bundle.keySet()?.forEach {
+                            Log.d("USB", "Intent Extra Key: $it -> Value: ${bundle.get(it)}")
+                        }
+                    }
+
+                    val device: UsbDevice? = intent.getParcelableExtra(UsbManager.EXTRA_DEVICE)
                     val granted = intent.getBooleanExtra(UsbManager.EXTRA_PERMISSION_GRANTED, false)
-                    if (granted && device != null) {
-                        Log.d("USB", "Permission granted for device: Vendor ID ${device.vendorId}, Product ID ${device.productId}")
+
+                    Log.v("USB 권한 결과", "granted: $granted")
+
+                    if (device != null) {
+                        Log.d(
+                            "USB",
+                            "Device Name: ${device.deviceName}, Vendor ID: ${device.vendorId}, Product ID: ${device.productId}"
+                        )
+                    } else {
+                        Log.e("USB", "Received USB device is null. Retrying...")
+                        return
+                    }
+
+                    if (granted) {
+                        Log.d(
+                            "USB",
+                            "Permission granted for device: Vendor ID=${device.vendorId}, Product ID=${device.productId}"
+                        )
                         val receivedData = sendAndReceiveDataFromCh340(device)
                         Log.d("USB", "Received Data: $receivedData")
                     } else {
-                        Log.d("USB", "Permission denied for device.")
+                        Log.w(
+                            "USB",
+                            "Permission denied in broadcast. Checking usbManager.hasPermission()..."
+                        )
+
+                        val usbManager = context.getSystemService(Context.USB_SERVICE) as UsbManager
+                        if (usbManager.hasPermission(device)) {
+                            Log.d(
+                                "USB",
+                                "Permission was actually granted. Proceeding with communication."
+                            )
+                            val receivedData = sendAndReceiveDataFromCh340(device)
+                            Log.d("USB", "Received Data: $receivedData")
+                        } else {
+                            Log.d("USB", "Permission is truly denied.")
+                        }
                     }
                 }
             }
         }
-        registerReceiver(usbReceiver, IntentFilter("com.example.USB_PERMISSION"))
+
+        val filter = IntentFilter("com.example.USB_PERMISSION")
+        filter.addAction(UsbManager.ACTION_USB_DEVICE_ATTACHED) // USB 연결 감지
+
+        ContextCompat.registerReceiver(
+            this,
+            usbReceiver,
+            filter,
+            ContextCompat.RECEIVER_NOT_EXPORTED
+        )
 
         setContent {
             UartTheme {
@@ -119,29 +177,56 @@ class MainActivity : ComponentActivity() {
         }
     }
 
-    private fun handleCh340Communication(): String? {
-        val driver = getCh340Driver()
+    private var isPermissionRequested = false
 
-        if (driver == null) {
-            Log.e("USB", "No compatible CH340 driver found.")
+
+    private fun handleCh340Communication(): String? {
+        val usbManager = getSystemService(USB_SERVICE) as UsbManager
+
+        val targetDevice = usbManager.deviceList.values.find {
+            it.vendorId == 6790 && it.productId == 29987
+        }
+
+        if (targetDevice == null) {
+            Log.e("USB", "No CH340 device found with Vendor ID=6790, Product ID=29987")
             return null
         }
 
-        val usbManager = getSystemService(USB_SERVICE) as UsbManager
+        Log.d("USB", "CH340 device detected: Vendor ID=${targetDevice.vendorId}, Product ID=${targetDevice.productId}")
+
         val permissionIntent = PendingIntent.getBroadcast(
             this,
             0,
-            Intent("com.example.USB_PERMISSION"),
-            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+            Intent("com.example.USB_PERMISSION").apply {
+                putExtra(UsbManager.EXTRA_DEVICE, targetDevice) // USB 장치 정보 명확하게 추가
+            },
+            PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
         )
 
-        if (!usbManager.hasPermission(driver.device)) {
-            Log.d("USB", "Requesting permission for CH340 device.")
-            usbManager.requestPermission(driver.device, permissionIntent)
-            return null // Permission result will be handled in BroadcastReceiver
+
+        // 이미 권한이 있는 경우 즉시 통신 시작
+        if (usbManager.hasPermission(targetDevice)) {
+            Log.d("USB", "Already have permission for CH340 device. Proceeding with communication.")
+            return sendAndReceiveDataFromCh340(targetDevice)
         }
 
-        return sendAndReceiveDataFromCh340(driver.device)
+        // 이미 요청 중이면 중복 요청 방지
+        if (isPermissionRequested) {
+            Log.w("USB", "USB Permission request already in progress. Skipping duplicate request.")
+            return null
+        }
+
+        isPermissionRequested = true
+
+        Log.w("USB", "USB Permission is NOT granted. Requesting permission now...")
+
+        val handler = Handler(Looper.getMainLooper())
+        handler.postDelayed({
+            usbManager.requestPermission(targetDevice, permissionIntent)
+            isPermissionRequested = false
+        }, 1000) // 1초 후에 권한 요청 (OS가 처리하도록 대기)
+
+        return null
     }
 
     private fun getCh340Driver(): UsbSerialDriver? {

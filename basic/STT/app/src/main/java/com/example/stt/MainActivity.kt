@@ -1,7 +1,10 @@
 package com.example.stt
 
 import android.app.Application
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
+import android.speech.RecognizerIntent
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.Column
@@ -50,6 +53,18 @@ fun Greeting(modifier: Modifier = Modifier) {
     val viewModel : SpeechToTextViewModel = viewModel(
         factory = SpeechToTextViewModelFactory(context.applicationContext as Application)
     )
+
+
+
+    fun isSpeechRecognitionAvailable(context: Context): Boolean {
+        val intent = Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH)
+        val pm = context.packageManager
+        val activities = pm.queryIntentActivities(intent, 0)
+        return activities.isNotEmpty()
+    }
+
+    isSpeechRecognitionAvailable(context)
+
 
     Column(
         modifier = Modifier.fillMaxSize(),
